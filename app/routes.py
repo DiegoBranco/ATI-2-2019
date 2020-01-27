@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for
-from app import app
+from app import app, mongo
 from app.forms import LoginForm
 
 
@@ -23,7 +23,14 @@ def index():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        mongo.db.user.insert_one({'username': form.username.data})
         flash('Login requested for user {}, remember_me={}'.format(
             form.username.data, form.remember_me.data))
         return redirect(url_for('index'))
-    return render_template('login.html', title='Sign In', form=form)
+
+
+
+    users = mongo.db.user.find({})
+
+    print(users)
+    return render_template('login.html', title='Sign In', form=form, users = users)
