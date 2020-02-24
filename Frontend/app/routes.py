@@ -35,3 +35,9 @@ def login():
 @app.errorhandler(404) 
 def not_found():
     return("not found")
+
+
+
+# @app.route('/static/styles/<path:path>')
+# def send_js(path):
+#     return send_from_directory('js', path)
