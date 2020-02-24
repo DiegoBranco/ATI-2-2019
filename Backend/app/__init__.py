@@ -4,7 +4,7 @@ from flask_babel import Babel
 from flask_debug import Debug
 
 
-from config import Config
+from .config import Config
 
 
 app = Flask(__name__)
@@ -26,4 +26,4 @@ if __name__ == "__main__":
 
 
 
-from app import routes
+# from app import routes
