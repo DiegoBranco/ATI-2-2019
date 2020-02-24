@@ -1,10 +1,9 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, mongo
 from app.forms import LoginForm
-
+from flask_babel import _
 
 @app.route('/')
-@app.route('/index')
 def index():
     user = {'username': 'Miguel'}
     posts = [
@@ -28,9 +27,17 @@ def login():
             form.username.data, form.remember_me.data))
         return redirect(url_for('index'))
 
-
-
     users = mongo.db.user.find({})
 
     print(users)
-    return render_template('login.html', title='Sign In', form=form, users = users)
+    return render_template('login.html', title='Sign In', form=form, users = users, message= _("hi"))
+
+@app.errorhandler(404) 
+def not_found():
+    return("not found")
+
+
+
+# @app.route('/static/styles/<path:path>')
+# def send_js(path):
+#     return send_from_directory('js', path)
