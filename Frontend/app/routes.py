@@ -4,7 +4,6 @@ from app.forms import LoginForm
 from flask_babel import _
 
 @app.route('/')
-@app.route('/index')
 def index():
     user = {'username': 'Miguel'}
     posts = [
@@ -32,3 +31,7 @@ def login():
 
     print(users)
     return render_template('login.html', title='Sign In', form=form, users = users, message= _("hi"))
+
+@app.errorhandler(404) 
+def not_found():
+    return("not found")
