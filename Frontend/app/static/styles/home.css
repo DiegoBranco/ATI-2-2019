@@ -1,5 +1,3 @@
-/* Caja es lo gris del principio*/
-
 .caja
 {
 	margin-bottom: 50px;
@@ -13,13 +11,22 @@
 {
 	padding-bottom: 25px;
 }
-/* Manejo de los cursos, imagenes, contenedores y demás*/
+
+.actual{
+	margin-top: 20px;
+	display: flex;
+	flex-direction: row;
+}
+.imgActual{
+	margin-left: 40%;
+}
+
 .listaCursos
 {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: space-around;
 	margin-bottom: 50px;
 }
 
@@ -47,9 +54,6 @@
 	margin-top: 10px;
 }
 
-/* Clientes */
-
-.tituloClientes{
-	margin-bottom: 50px;
+.contenedorDisponibles{
+	margin-top: 50px;
 }
-

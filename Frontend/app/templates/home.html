@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/styles/home.css">
+{% endblock %}
+
+{%block content%}
+	<div class="position-relative overflow-hidden p-10 p-md-10 m-md-10 text-center bg-light caja">
+			<div class="col-md-10 p-lg-10 mx-auto  finCaja">
+			<h1 class="hola display-4 font-weight-normal centralCaja">{{_('Hola %(user)s', user = user.username) }}</h1>
+			<h2>{{_("¡Nos alegra que regresaras!")}}</h2>
+			</div>
+	</div>
+		<h3 class="text-center font-weight-normal">{{_("Esta es la ultimá certificación que obtuviste")}}</h3>
+		<div class="actual">
+			<img height="100px" class="imgActual" src="/static/image/{{post.cursos.ultimo.cert}}.png">
+			<span><h2>{{post.cursos.ultimo.cert}}</h2><p>{{post.cursos.ultimo.description}}</p></span>
+		</div>
+
+	<div class="contenedorDisponibles">
+		<h3 class="text-center font-weight-normal">{{_("Estas son algunas de las certificaciones que te faltan por obtener")}}</h3>
+
+		<div class="listaCursos">
+			{% for post in post.cursos.disponibles %}
+			<div class="contenedorCurso">
+			<img height=100px class="imagenCurso" src="/static/image/{{post.cert}}.png">
+			<span class="curso"><h2>{{post.cert}}</h2><p>{{post.description}}</p></span>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	<h3 class="text-center tituloClientes">{{_('Estas son algunas de las certificaciónes que ya has obtenido')}}</h3>
+	<div class="listaCursos">
+		{% for post in post.cursos.terminados %}
+		<div class="contenedorCursos">
+			<img height=100px src="/static/image/{{post.cert}}.png">
+			<span class="curso"><h2>{{post.cert}}</h2><p>{{post.description}}</p></span>
+		</div>
+		{% endfor %}
+	</div>
+
+
+{%endblock%}

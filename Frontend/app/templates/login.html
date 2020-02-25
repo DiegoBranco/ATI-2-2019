@@ -20,17 +20,5 @@
         </p>
         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
         <p>{{ form.submit() }}</p>
-
-
-        <div>
-            {% for user in users %} 
-
-            <p>
-                {{user}}
-            </p>
-            {% endfor%} 
-
-        </div>
-        {{ message }}
     </form>
 {% endblock %}

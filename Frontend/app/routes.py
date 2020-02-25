@@ -45,12 +45,45 @@ def login():
         mongo.db.user.insert_one({'username': form.username.data})
         flash('Login requested for user {}, remember_me={}'.format(
             form.username.data, form.remember_me.data))
-        return redirect(url_for('index'))
+        return redirect(url_for('home'))
 
     users = mongo.db.user.find({})
 
     print(users)
     return render_template('login.html', title='Sign In', form=form, users = users, message= _("hi"))
+
+@app.route('/home')
+def home():
+    user = {'username':'Miguel'}
+    post = {
+        'cursos':{
+        'ultimo':{
+        'cert':'HTML',
+        'description':'Curso introductorio de HTML5'},
+        'terminados':[
+    {'cert':'Marketing digital',
+    'description':'Descripcion de curso pendiente'},
+    {'cert':'Javascript',
+    'description':'Descripcion de curso pendiente'},
+    {'cert':'ReactJS',
+    'description':'Descripcion de curso pendiente'},
+    {'cert':'Angular',
+    'description':'Descripcion de curso pendiente'},
+    {'cert':'Rails',
+    'description':'Descripcion de curso pendiente'},
+    {'cert':'Python',
+    'description':'Descripcion de curso pendiente'}
+    ],
+    'disponibles':[
+    {'cert':'Ruby',
+    'description':'Descripcion de curso pendiente'},
+    {'cert':'C++',
+    'description':'Descripcion de curso pendiente'},
+    {'cert':'CSS',
+    'description':'Descripcion de curso pendiente'}
+    ]}}
+    return render_template('home.html', title='Home', user=user, post=post)
+
 
 @app.errorhandler(404) 
 def not_found():
