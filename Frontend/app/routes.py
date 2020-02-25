@@ -3,8 +3,8 @@ from app import app, mongo
 from app.forms import LoginForm
 from flask_babel import _
 
-@app.route('/')
-def index():
+@app.route('/ejemplo')
+def ejemplo():
     user = {'username': 'Miguel'}
     posts = [
         {
@@ -16,10 +16,10 @@ def index():
             'body': 'The Avengers movie was so cool!'
         }
     ]
-    return render_template('index.html', title='Home', user=user, posts=posts)
+    return render_template('ejemplo.html', title='Home', user=user, posts=posts)
 
-@app.route('/landing')
-def landing():
+@app.route('/')
+def index():
     cursos=[
     {'cert':'Marketing digital',
     'description':'Descripcion de curso pendiente'},
@@ -35,7 +35,7 @@ def landing():
     'description':'Descripcion de curso pendiente'}
     ]
     clientes=['Google', 'Platzi', 'Yahoo', 'Bing']
-    return render_template('landing.html', title="ATI te educamos", cursos=cursos, clientes=clientes)
+    return render_template('index.html', title="ATI te educamos", cursos=cursos, clientes=clientes)
 
 
 @app.route('/login', methods=['GET', 'POST'])
