@@ -1,0 +1,55 @@
+/* Caja es lo gris del principio*/
+
+.caja
+{
+	margin-bottom: 50px;
+}
+
+.centralCaja
+{
+	padding-top: 50px;
+}
+.finCaja
+{
+	padding-bottom: 25px;
+}
+/* Manejo de los cursos, imagenes, contenedores y demás*/
+.listaCursos
+{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	margin-bottom: 50px;
+}
+
+.curso
+{
+	width: 350px;
+	height: 100px;
+	margin-top: 20px;
+}
+
+.imagenCurso
+{
+	height: 75px;
+	margin-left: 70px;
+}
+.contenedorCurso
+{
+	margin-left: auto;
+	margin-top: 30px;
+	width: 300px;
+	transition: transform 1s, margin-top 1s;
+}
+.contenedorCurso:hover{
+	transform: scale(1.2);
+	margin-top: 10px;
+}
+
+/* Clientes */
+
+.tituloClientes{
+	margin-bottom: 50px;
+}
+
