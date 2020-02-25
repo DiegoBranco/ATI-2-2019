@@ -18,6 +18,26 @@ def index():
     ]
     return render_template('index.html', title='Home', user=user, posts=posts)
 
+@app.route('/landing')
+def landing():
+    cursos=[
+    {'cert':'Marketing digital',
+    'description':'Descripcion de curso pendiente'},
+    {'cert':'Javascript',
+    'description':'Descripcion de curso pendiente'},
+    {'cert':'ReactJS',
+    'description':'Descripcion de curso pendiente'},
+    {'cert':'Angular',
+    'description':'Descripcion de curso pendiente'},
+    {'cert':'Rails',
+    'description':'Descripcion de curso pendiente'},
+    {'cert':'Python',
+    'description':'Descripcion de curso pendiente'}
+    ]
+    clientes=['Google', 'Platzi', 'Yahoo', 'Bing']
+    return render_template('landing.html', title="ATI te educamos", cursos=cursos, clientes=clientes)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
