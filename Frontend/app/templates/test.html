@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/styles/test.css">
+{% endblock %}
+
+{% block content %}
+    <h1>{{_('Certificación de %(title)s', title = test.title)}}</h1>
+    <h2 id="tiempo">{{test.time}}</h2>
+    <form action="" method="post" novalidate>
+        <div class="examen">
+            {% for pregunta in test.preguntas %}
+            <div class="pregunta">
+                <p>{{ pregunta.pregunta }}</p>
+                {% if pregunta.codigo %}
+                <code> Puts 'Hello World!'</code>
+                <br>
+                {% endif %}
+                <div class="respuestas">
+                {% for respuesta in pregunta.opciones %}
+                <div>
+                    <input type="radio" name="{{pregunta.name}}" value="{{respuesta}}">
+                    <label for="{{respuesta}}">{{respuesta}}</label>
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <script type="text/javascript">
+        const reloj = document.getElementById('tiempo');
+        let min = reloj.innerHTML[0] + reloj.innerHTML[1];
+        let seg = reloj.innerHTML[3] + reloj.innerHTML[4];
+
+        function showTime(mins){
+            return (seg < 10 && seg !== "00") ? mins + ':' + '0' + seg : mins + ':' + seg;
+        }
+        function timercount(mins){
+            if (seg > 0){
+                seg = seg - 1;
+            }else {
+                mins = mins - 1;
+                seg = 59;
+            }
+            return mins
+        }
+
+        function iterador(){
+            if(min > 0 || seg > 0){
+                min = timercount(min);
+                reloj.innerHTML = showTime(min)
+            }else {
+                clearInterval(iden);
+                reloj.innerHTML = showTime(min);
+                alert("Se te acabó el tiempo, más suerte a la próxima.")
+            }
+        }
+        let iden = setInterval(function(){
+            iterador()},1000);
+    </script>
+{% endblock %}

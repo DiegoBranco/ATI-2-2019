@@ -45,7 +45,7 @@ def login():
         mongo.db.user.insert_one({'username': form.username.data})
         flash('Login requested for user {}, remember_me={}'.format(
             form.username.data, form.remember_me.data))
-        return redirect(url_for('home'))
+        return redirect(url_for('land'))
 
     users = mongo.db.user.find({})
 
@@ -84,6 +84,33 @@ def home():
     ]}}
     return render_template('home.html', title='Home', user=user, post=post)
 
+@app.route('/test', methods=['GET', 'POST'])
+def test():
+    user = {'username':'Miguel'}
+    test = {
+    'title':'Ruby',
+    'time':'20:00',
+    'preguntas':[{
+    'tipo':'seleccion',
+    'codigo':True,
+    'pregunta':'¿Cúal es el output del siguiente fragmento de código?',
+    'opciones':['Hello World!', 'Puts "Hello World!" ','Error','P (World!)'],
+    'correcta':'Hello World!',
+    'name':'pregunta1'
+    },{
+    'tipo':'trueFalse',
+    'codigo':False,
+    'pregunta':'¿Ruby es un lenguaje fuertemente tipado?',
+    'opciones':['Si', 'No'],
+    'correcta' : 'Si',
+    'name':'pregunta2'
+    }]
+    }
+    form = LoginForm()
+    if form.validate_on_submit():
+        return redirect(url_for('home'))
+
+    return render_template('test.html', title='Certificacion', user=user, test=test, form=form)
 
 @app.errorhandler(404) 
 def not_found():
