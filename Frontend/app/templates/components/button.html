@@ -1,0 +1,8 @@
+
+
+
+{{ form.username.label }}<br>
+{{ form.username(size=32, class='form-control') }}<br>
+{% for error in form.username.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
