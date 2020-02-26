@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% endblock %}
+
+
+{% block content %}
+<div class="jumbotron text-center">
+  <h1>{{ course.title }}</h1>
+  <img src='{{course.imgUrl}}' style="width:200px;">
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <p> {{ course.description }} </p>
+      <p> {{ course.limits }}</p>
+      <p class="bg-warning text-black font-weight-bold">
+        {{ course.warning}}
+      </p>  
+
+      <div class="d-flex justify-content-center">
+        <a class="finCaja " href="{{ url_for('test', courseId= course._id) }}">
+          <button class="btn btn-outline-secondary">
+              Iniciar Test
+          </button>
+        </a>      
+      
+        <a class="finCaja " href="{{ url_for('course_editor', courseId= course._id) }}">
+          <button class="btn btn-outline-secondary">
+            Editar Test
+          </button>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block linkjs %}
+<script src="/static/js/details.js"></script>
+
+{% endblock %}

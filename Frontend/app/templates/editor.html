@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/styles/landing.css">
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron text-center">
+  <h1>{{ course.title }}</h1>
+  <img src='{{course.imgUrl}}' style="width:200px;">
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+    <p>
+        {{ form.description.label }}<br>
+        {{ form.description(class='form-control', value= course.description) }}<br>
+        {% for error in form.description.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+
+      <p> {{ course.limits }}</p>
+      <p class="bg-warning text-black font-weight-bold">
+        {{ course.warning}}
+      </p>
+
+      <a class="finCaja" href="{{ url_for('home') }}">
+        <button class="btn btn-outline-secondary">
+            Guardar Cambios
+        </button>
+    </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

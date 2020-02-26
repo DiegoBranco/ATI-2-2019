@@ -1,7 +1,11 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, mongo
-from app.forms import LoginForm
+from app.forms import LoginForm, EditorForm
 from flask_babel import _
+
+
+# Como recibir parametros de url 
+# https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for
 
 @app.route('/ejemplo')
 def ejemplo():
@@ -21,25 +25,84 @@ def ejemplo():
 @app.route('/')
 def index():
     cursos=[
-    {'cert':'Marketing digital',
-    'description':'Descripcion de curso pendiente'},
-    {'cert':'Javascript',
-    'description':'Descripcion de curso pendiente'},
-    {'cert':'ReactJS',
-    'description':'Descripcion de curso pendiente'},
-    {'cert':'Angular',
-    'description':'Descripcion de curso pendiente'},
-    {'cert':'Rails',
-    'description':'Descripcion de curso pendiente'},
-    {'cert':'Python',
-    'description':'Descripcion de curso pendiente'}
+    {
+        'cert':'Marketing digital',
+        '_id': 'Marketing digital',
+        'description':'Descripcion de curso pendiente',
+    },
+    {
+        'cert':'Javascript',
+        '_id': 'Javascript',
+        'description':'Descripcion de curso pendiente',
+    },
+    {
+        'cert':'ReactJS',
+        '_id': 'ReactJS',
+        'description':'Descripcion de curso pendiente',
+    },
+    {
+        'cert':'Angular',
+        '_id': 'Angular',
+        'description':'Descripcion de curso pendiente',
+    },
+    {
+        'cert':'Rails',
+        '_id': 'Rails',
+        'description':'Descripcion de curso pendiente',
+    },
+    {
+        'cert':'Python',
+        '_id': 'Python',
+        'description':'Descripcion de curso pendiente',
+    }
     ]
     clientes=['Google', 'Platzi', 'Yahoo', 'Bing']
     return render_template('index.html', title="ATI te educamos", cursos=cursos, clientes=clientes)
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+
+@app.route('/details/<string:courseId>', methods=['GET'])
+def course_details(courseId):
+    course = {
+        'title': 'Curso introductorio de HTML5',
+        'description': 'En este curso aprenderas todo lo necesario para hacer una pagina sencilla en html.',
+        'limits': 'Esta certificacion consta de 10 preguntas de seleccion simple y verdadero y falso. Adicionalmente tiene 30min para responderlas',
+        'warning': 'ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental del lenguaje de marcado de hipertexto HTML, de lo contrario, no obtendra el certificado deseado',
+        'imgUrl': '/static/image/HTML.png',
+        '_id': courseId
+    }
+    return render_template('details.html', title='Details', course=course)
+
+@app.route('/editor/<string:courseId>', methods=['GET'])
+def course_editor(courseId):
+    course = {
+        'title': 'Curso introductorio de HTML5',
+        'description': 'En este curso aprenderas todo lo necesario para hacer una pagina sencilla en html.',
+        'limits': 'Esta certificacion consta de 10 preguntas de seleccion simple y verdadero y falso. Adicionalmente tiene 30min para responderlas',
+        'warning': 'ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental del lenguaje de marcado de hipertexto HTML, de lo contrario, no obtendra el certificado deseado',
+        'imgUrl': '/static/image/HTML.png',
+        '_id': courseId
+    }
+
+    form = EditorForm()
+    return render_template('editor.html', title='Editor', course=course, form=form)
+
+@app.route('/sign-in', methods=['GET', 'POST'])
+def signIn():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # mongo.db.user.insert_one({'username': form.username.data})
+        flash('Login requested for user {}, remember_me={}'.format(
+            form.username.data, form.remember_me.data))
+        return redirect(url_for('land'))
+
+    # users = mongo.db.user.find({})
+
+    return render_template('sign-in.html', title='Sign In', form=form, message= _("hi"))
+
+
+@app.route('/sign-up', methods=['GET', 'POST'])
+def signUp():
     form = LoginForm()
     if form.validate_on_submit():
         mongo.db.user.insert_one({'username': form.username.data})
@@ -49,8 +112,7 @@ def login():
 
     users = mongo.db.user.find({})
 
-    print(users)
-    return render_template('login.html', title='Sign In', form=form, users = users, message= _("hi"))
+    return render_template('sign-up.html', form=form, message= _("hi"))
 
 @app.route('/home')
 def home():
@@ -61,49 +123,77 @@ def home():
         'cert':'HTML',
         'description':'Curso introductorio de HTML5'},
         'terminados':[
-    {'cert':'Marketing digital',
-    'description':'Descripcion de curso pendiente'},
-    {'cert':'Javascript',
-    'description':'Descripcion de curso pendiente'},
-    {'cert':'ReactJS',
-    'description':'Descripcion de curso pendiente'},
-    {'cert':'Angular',
-    'description':'Descripcion de curso pendiente'},
-    {'cert':'Rails',
-    'description':'Descripcion de curso pendiente'},
-    {'cert':'Python',
-    'description':'Descripcion de curso pendiente'}
-    ],
-    'disponibles':[
-    {'cert':'Ruby',
-    'description':'Descripcion de curso pendiente'},
-    {'cert':'C++',
-    'description':'Descripcion de curso pendiente'},
-    {'cert':'CSS',
-    'description':'Descripcion de curso pendiente'}
-    ]}}
+            {
+                'cert':'Marketing digital',
+                'description':'Descripcion de curso pendiente',
+                '_id': 'Marketing digital',
+            },
+            {
+                'cert':'Javascript',
+                'description':'Descripcion de curso pendiente',
+                '_id': 'Javascript',
+            },
+            {
+                'cert':'ReactJS',
+                'description':'Descripcion de curso pendiente',
+                '_id': 'ReactJS',
+            },
+            {
+                'cert':'Angular',
+                'description':'Descripcion de curso pendiente',
+                '_id': 'Angular',
+            },
+            {
+                'cert':'Rails',
+                'description':'Descripcion de curso pendiente',
+                '_id': 'Rails',
+            },
+            {
+                'cert':'Python',
+                'description':'Descripcion de curso pendiente',
+                '_id': 'Python',
+            }
+        ],
+        'disponibles':[
+            {
+                'cert':'Ruby',
+                'description':'Descripcion de curso pendiente',
+                '_id': 'Ruby',
+            },
+            {
+                'cert':'C++',
+                'description':'Descripcion de curso pendiente',
+                '_id': 'C++',
+            },
+            {
+                'cert':'CSS',
+                'description':'Descripcion de curso pendiente',
+                '_id': 'CSS',
+            }
+        ]
+    }}
     return render_template('home.html', title='Home', user=user, post=post)
 
-@app.route('/test', methods=['GET', 'POST'])
-def test():
+@app.route('/test/<string:courseId>', methods=['GET', 'POST'])
+def test(courseId):
     user = {'username':'Miguel'}
     test = {
-    'title':'Ruby',
-    'time':'20:00',
-    'preguntas':[{
-    'tipo':'seleccion',
-    'codigo':True,
-    'pregunta':'¿Cúal es el output del siguiente fragmento de código?',
-    'opciones':['Hello World!', 'Puts "Hello World!" ','Error','P (World!)'],
-    'correcta':'Hello World!',
-    'name':'pregunta1'
+        'title':'Ruby',
+        'time':'20:00',
+        'preguntas':[{
+        'tipo':'seleccion',
+        'codigo':True,
+        'pregunta':'¿Cúal es el output del siguiente fragmento de código?',
+        'opciones':['Hello World!', 'Puts "Hello World!" ','Error','P (World!)'],
+        'correcta':'Hello World!',
+        'name':'pregunta1'
     },{
-    'tipo':'trueFalse',
-    'codigo':False,
-    'pregunta':'¿Ruby es un lenguaje fuertemente tipado?',
-    'opciones':['Si', 'No'],
-    'correcta' : 'Si',
-    'name':'pregunta2'
+        'tipo':'trueFalse',
+        'codigo':False,
+        'pregunta':'¿Ruby es un lenguaje fuertemente tipado?',
+        'opciones':['Si', 'No'],
+        'correcta' : 'Si',
+        'name':'pregunta2'
     }]
     }
     form = LoginForm()
