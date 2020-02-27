@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, mongo
-from app.forms import LoginForm, EditorForm
+from app.forms import SignInForm, SignUpForm, CertificateForm
 from flask_babel import _
 
 
@@ -71,7 +71,8 @@ def course_details(courseId):
         'imgUrl': '/static/image/HTML.png',
         '_id': courseId
     }
-    return render_template('details.html', title='Details', course=course)
+    form = CertificateForm()
+    return render_template('details.html', title='Details', course=course, form=form)
 
 @app.route('/editor/<string:courseId>', methods=['GET'])
 def course_editor(courseId):
@@ -84,12 +85,12 @@ def course_editor(courseId):
         '_id': courseId
     }
 
-    form = EditorForm()
+    form = CertificateForm()
     return render_template('editor.html', title='Editor', course=course, form=form)
 
 @app.route('/sign-in', methods=['GET', 'POST'])
 def signIn():
-    form = LoginForm()
+    form = SignInForm()
     if form.validate_on_submit():
         # mongo.db.user.insert_one({'username': form.username.data})
         flash('Login requested for user {}, remember_me={}'.format(
@@ -103,7 +104,7 @@ def signIn():
 
 @app.route('/sign-up', methods=['GET', 'POST'])
 def signUp():
-    form = LoginForm()
+    form = SignUpForm()
     if form.validate_on_submit():
         mongo.db.user.insert_one({'username': form.username.data})
         flash('Login requested for user {}, remember_me={}'.format(

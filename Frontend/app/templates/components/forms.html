@@ -1,0 +1,11 @@
+
+
+{% macro input(field, data) -%}
+  <div>
+    {{ field.label }}<br>
+    {{ field(class='form-control') }}<br>
+    {% for error in field.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+  </div>
+  {%- endmacro %}

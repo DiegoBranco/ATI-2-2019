@@ -6,6 +6,4 @@ class Config(object):
     LANGUAGES = ['en', 'es']
 
 
-
-
 print(os.environ.get('MONGO_URI'))

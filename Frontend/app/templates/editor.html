@@ -1,3 +1,7 @@
+{% import './components/forms.html' as forms %}
+
+
+
 {% extends "base.html" %}
 
 {% block head %}
@@ -12,27 +16,53 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-12">
-    <p>
+
+    <form method="POST">
+
+      <div class="col-sm-12">
+        {{ forms.input(form.title) }}
+        {{ forms.input(form.description) }}
+        {{ forms.input(form.scoreForTrueFalse) }}
+        {{ forms.input(form.scoreForSimpleSelection) }}
+        {{ forms.input(form.numQuestions) }}
+        <!-- <p>
+
         {{ form.description.label }}<br>
         {{ form.description(class='form-control', value= course.description) }}<br>
         {% for error in form.description.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
-    </p>
+      </p> -->
+      
 
-      <p> {{ course.limits }}</p>
-      <p class="bg-warning text-black font-weight-bold">
-        {{ course.warning}}
-      </p>
+    </form>
+      
+    </div>
+    <div>
 
+
+
+    
       <a class="finCaja" href="{{ url_for('home') }}">
         <button class="btn btn-outline-secondary">
-            Guardar Cambios
+          Agregar pregunta
         </button>
-    </a>
+      </a>
+      <div>
+        <div>
+
+        </div>
+      </div>
     </div>
+
   </div>
+
+
+
+  <a class="finCaja" href="{{ url_for('home') }}">
+    <button class="btn btn-outline-secondary">
+      Guardar Cambios
+    </button>
+  </a>
 </div>
 {% endblock %}
-
