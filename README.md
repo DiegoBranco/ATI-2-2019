@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-# ATI-2-2021
-Aplicaciones con Tecnologia de Internet UCV 2-2021
-=======
 # ATI-2-2019
 Aplicaciones con Tecnologia de Internet UCV 2-2019
->>>>>>> 1a56d11fce0cddaa8858504afff033427b654c33
 
 ### Correr la app
 
