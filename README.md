@@ -1,5 +1,5 @@
-# ATI-2-2019
-Aplicaciones con Tecnologia de Internet UCV 2-2019
+# ATI-2-2020
+Aplicaciones con Tecnologia de Internet UCV 2-2020
 
 ### Correr la app
 
