@@ -13,8 +13,43 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <p> {{ course.description }} </p>
-      <p> {{ course.limits }}</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"> Caracterisiticas</th>
+            <th scope="col"> Detalles </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Fecha de creacion/actualizacion:</th>
+            <td> {{ course.dateCreated }} </td>
+          </tr>
+          <tr>
+            <th scope="row">Descripcion:</th>
+            <td> {{ course.description }} </td>
+          </tr>
+          <tr>
+            <th scope="row">Numero de Preguntas:</th>
+            <td> {{ course.numQuestions }} </td>
+          </tr>
+          <tr>
+            <th scope="row">Duracion de la prueba:</th>
+            <td> {{ course.timeForTest }} </td>
+          </tr>
+          <tr>
+            <th scope="row">Puntaje Verdadero o Falso:</th>
+            <td> {{ course.scoreForTrueFalse }} </td>
+          </tr>
+          <tr>
+            <th scope="row">Puntaje de seleccion:</th>
+            <td> {{ course.scoreForSimpleSelection }} </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </br>
+
       <p class="bg-warning text-black font-weight-bold">
         {{ course.warning}}
       </p>  

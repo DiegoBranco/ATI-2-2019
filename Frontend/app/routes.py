@@ -64,10 +64,14 @@ def index():
 @app.route('/details/<string:courseId>', methods=['GET'])
 def course_details(courseId):
     course = {
-        'title': 'Curso introductorio de HTML5',
-        'description': 'En este curso aprenderas todo lo necesario para hacer una pagina sencilla en html.',
-        'limits': 'Esta certificacion consta de 10 preguntas de seleccion simple y verdadero y falso. Adicionalmente tiene 30min para responderlas',
-        'warning': 'ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental del lenguaje de marcado de hipertexto HTML, de lo contrario, no obtendra el certificado deseado',
+        'dateCreated':'1/Mar/2020',
+        'title': 'Principios Basicos de HTML5',
+        'description': 'Esta certificacion es sobre la estructura basica para realizar una pagina sencilla en html.',
+        'numQuestions': '15 preguntas.',
+        'scoreForTrueFalse':'1 punto cada una.',
+        'scoreForSimpleSelection':'2 puntos cada una.',
+        'timeForTest':'20min.',
+        'warning': 'ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental del lenguaje de marcado de hipertexto HTML, de lo contrario, no obtendra el certificado deseado.',
         'imgUrl': '/static/image/HTML.png',
         '_id': courseId
     }
@@ -77,10 +81,14 @@ def course_details(courseId):
 @app.route('/editor/<string:courseId>', methods=['GET'])
 def course_editor(courseId):
     course = {
-        'title': 'Curso introductorio de HTML5',
-        'description': 'En este curso aprenderas todo lo necesario para hacer una pagina sencilla en html.',
-        'limits': 'Esta certificacion consta de 10 preguntas de seleccion simple y verdadero y falso. Adicionalmente tiene 30min para responderlas',
-        'warning': 'ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental del lenguaje de marcado de hipertexto HTML, de lo contrario, no obtendra el certificado deseado',
+        'title': 'Principios Basicos de HTML5',
+
+        'description': 'Esta certificacion es sobre la estructura basica para realizar una pagina sencilla en html. ',
+        'numQuestions': 'Posee un total de 15 preguntas, 5 de seleccion simple y 10 de verdadero y falso. ',
+        'scoreForTrueFalse':'Las preguntas de Verdadero o Falso vale 1punto cada una. ',
+        'scoreForSimpleSelection':'Las preguntas de seleccion simple valen 2puntos cada una. ',
+        'timeForTest':'Adicionalmente tiene 20min para responderlas.',
+        'warning': 'ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental del lenguaje de marcado de hipertexto HTML, de lo contrario, no obtendra el certificado deseado.',
         'imgUrl': '/static/image/HTML.png',
         '_id': courseId
     }
