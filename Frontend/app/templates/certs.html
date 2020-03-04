@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/styles/certs.css">
+{% endblock %}
+
+{% block content %}
+	<div class="contenedorDisponibles">
+		<h3 class="text-center font-weight-normal">{{_("Certificaciones disponibles")}}</h3>
+
+		<div class="listaCursos jumbotron">
+			{% for post in cursos %}
+			<a href="{{ url_for('course_details', courseId=post._id) }}"><div class="contenedorCurso">
+			<img height=100px class="imagenCurso" src="/static/image/{{post.cert}}.png">
+			<span class="curso"><h2>{{post.cert}}</h2><p>{{post.description}}</p></span>
+			</div>
+			</a>
+			{% endfor %}
+		</div>
+	</div>
+
+{% endblock %}

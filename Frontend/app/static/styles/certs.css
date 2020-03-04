@@ -1,0 +1,33 @@
+.listaCursos
+{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-bottom: 50px;
+	background-color: lightgray;
+}
+
+.curso
+{
+	width: 350px;
+	height: 100px;
+	margin-top: 20px;
+}
+
+.imagenCurso
+{
+	height: 75px;
+	margin-left: 70px;
+}
+.contenedorCurso
+{
+	margin-left: auto;
+	margin-top: 30px;
+	width: 300px;
+	transition: transform 1s, margin-top 1s;
+}
+.contenedorCurso:hover{
+	transform: scale(1.2);
+	margin-top: 10px;
+}

@@ -205,11 +205,189 @@ def test(courseId):
         'name':'pregunta2'
     }]
     }
-    form = LoginForm()
-    if form.validate_on_submit():
-        return redirect(url_for('home'))
 
-    return render_template('test.html', title='Certificacion', user=user, test=test, form=form)
+    return render_template('test.html', title='Certificacion', user=user, test=test)
+
+@app.route('/certs')
+def certs():
+    cursos=[
+    {
+        'cert':'Marketing digital',
+        '_id': 'Marketing digital',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Javascript',
+        '_id': 'Javascript',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'ReactJS',
+        '_id': 'ReactJS',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Angular',
+        '_id': 'Angular',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Rails',
+        '_id': 'Rails',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Python',
+        '_id': 'Python',
+        'description':'Descripcion de curso pendiente'
+    },{
+        'cert':'Marketing digital',
+        '_id': 'Marketing digital',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Javascript',
+        '_id': 'Javascript',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'ReactJS',
+        '_id': 'ReactJS',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Angular',
+        '_id': 'Angular',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Rails',
+        '_id': 'Rails',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Python',
+        '_id': 'Python',
+        'description':'Descripcion de curso pendiente'
+    },{
+        'cert':'Marketing digital',
+        '_id': 'Marketing digital',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Javascript',
+        '_id': 'Javascript',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'ReactJS',
+        '_id': 'ReactJS',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Angular',
+        '_id': 'Angular',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Rails',
+        '_id': 'Rails',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Python',
+        '_id': 'Python',
+        'description':'Descripcion de curso pendiente'
+    },{
+        'cert':'Marketing digital',
+        '_id': 'Marketing digital',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Javascript',
+        '_id': 'Javascript',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'ReactJS',
+        '_id': 'ReactJS',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Angular',
+        '_id': 'Angular',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Rails',
+        '_id': 'Rails',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Python',
+        '_id': 'Python',
+        'description':'Descripcion de curso pendiente'
+    },{
+        'cert':'Marketing digital',
+        '_id': 'Marketing digital',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Javascript',
+        '_id': 'Javascript',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'ReactJS',
+        '_id': 'ReactJS',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Angular',
+        '_id': 'Angular',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Rails',
+        '_id': 'Rails',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Python',
+        '_id': 'Python',
+        'description':'Descripcion de curso pendiente'
+    },{
+        'cert':'Marketing digital',
+        '_id': 'Marketing digital',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Javascript',
+        '_id': 'Javascript',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'ReactJS',
+        '_id': 'ReactJS',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Angular',
+        '_id': 'Angular',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Rails',
+        '_id': 'Rails',
+        'description':'Descripcion de curso pendiente'
+    },
+    {
+        'cert':'Python',
+        '_id': 'Python',
+        'description':'Descripcion de curso pendiente'
+    }
+    ]
+    return render_template('certs.html', title='Lista de cursos', cursos=cursos)
 
 @app.errorhandler(404) 
 def not_found():
