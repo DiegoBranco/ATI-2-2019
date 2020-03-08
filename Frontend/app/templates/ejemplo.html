@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="green" >{{ _('Hi, %(username)s!', username=user.username) }}!</h1>
+    <h1 class="green" >{{ _('Hi, %(username)s!', username=user.name) }}!</h1>
     {% for post in posts %}
     <div><p class="orange">{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
     {% endfor %}

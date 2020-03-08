@@ -22,6 +22,34 @@ def ejemplo():
     ]
     return render_template('ejemplo.html', title='Home', user=user, posts=posts)
 
+@app.route('/perfil')
+def perfil():
+    user = { 
+        'name': 'Fulano',
+        'lastname': 'de Tal'
+    }
+    certificate = [
+            {
+                'imgUrl': '/static/image/HTML.png',
+                'title': 'HTML'
+            },
+            
+            {
+                'imgUrl': '/static/image/C++.png',
+                'title': 'C++'
+            },
+            {
+                'imgUrl': '/static/image/Python.png',
+                'title': 'Python'
+            },
+            {
+                'imgUrl': '/static/image/Ruby.png',
+                'title': 'Ruby'
+            },
+    ]
+
+    return render_template('perfil.html', user=user, certificate=certificate)
+
 @app.route('/')
 def index():
     cursos=[
