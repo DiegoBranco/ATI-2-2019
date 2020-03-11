@@ -20,7 +20,7 @@ def get_locale():
     return "es"
 
 if __name__ == "__main__":
-    app.run(port=5001, debug=True, host='0.0.0.0')
+    app.run(port=5001, debug=True, host='0.0.0.0') 
     print("server running")
 
 from app import routes

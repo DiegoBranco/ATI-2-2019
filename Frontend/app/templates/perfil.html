@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/styles/landing.css">
+{% endblock %}
+
+{%block content%}
+    <h1 class="green" >{{ _('Hi, %(username)s!', username=user.name) }}!</h1>
+
+    <h2>Estos son los certificados que has logrado completar:</h2>
+    {% for cert in certificate %}
+    <table>
+        <tr>
+            <td>
+                <img src = "{{ cert.imgUrl }}" height = "25" width = "25">
+            </td>
+            <td>
+                <p class="green">{{ cert.title }} </p>
+            </td>
+        </tr>
+    </table>
+    {% endfor %}
+{%endblock%}
