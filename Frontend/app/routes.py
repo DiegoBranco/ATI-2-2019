@@ -109,15 +109,14 @@ def course_details(courseId):
 def course_editor(courseId):
     course = {
         '_id': courseId,
+        'dateCreated':'1/Mar/2020',
         'title': 'Principios Basicos de HTML5',
-        'description': 'Esta certificacion es sobre la estructura basica para realizar una pagina sencilla en html. ',
-        'numQuestions': 'Posee un total de 15 preguntas, 5 de seleccion simple y 10 de verdadero y falso. ',
-        'scoreForTrueFalse':'Las preguntas de Verdadero o Falso vale 1punto cada una. ',
-        'scoreForSimpleSelection':'Las preguntas de seleccion simple valen 2puntos cada una. ',
-        'timeForTest':'Adicionalmente tiene 20min para responderlas.',
-        'imgUrl': '/static/image/HTML.png'
-    }
-
+        'description': 'Esta certificacion es sobre la estructura basica para realizar una pagina sencilla en html.',
+        'numQuestions': '15 preguntas.',
+        'scoreForTrueFalse':'1 punto cada una.',
+        'scoreForSimpleSelection':'2 puntos cada una.',
+        'timeForTest':'20min.',
+        'imgUrl': '/static/image/HTML.png'    }
     form = CertificateForm()
     return render_template('editor.html', title='Editor', course=course, form=form)
 
