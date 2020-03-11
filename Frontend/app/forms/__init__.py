@@ -24,7 +24,7 @@ class CertificateForm(FlaskForm):
     scoreForTrueFalse = IntegerField("Score For True False", validators=[DataRequired(), NumberRange(min=0)] ) 
     scoreForSimpleSelection = IntegerField("Score For Simple Selection", validators=[DataRequired(), NumberRange(min=0)] )
     numQuestions = IntegerField("numQuestions", validators=[DataRequired(), NumberRange(min=0)] )
-    # timeForTests = Da
+    timeForTest = StringField("timeForTest", validators=[DataRequired(), NumberRange(min=0)] )
     submit = SubmitField('Save Changes')
     
 

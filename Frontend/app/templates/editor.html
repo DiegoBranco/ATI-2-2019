@@ -1,7 +1,5 @@
 {% import './components/forms.html' as forms %}
 
-
-
 {% extends "base.html" %}
 
 {% block head %}
@@ -20,13 +18,16 @@
     <form method="POST">
 
       <div class="col-sm-12">
-        {{ forms.input(form.title) }}
-        {{ forms.input(form.description) }}
+        <div>
+          {{ forms.input(form.title) }}
+          {{ forms.input(form.description) }}
+        </div>
         {{ forms.input(form.scoreForTrueFalse) }}
         {{ forms.input(form.scoreForSimpleSelection) }}
         {{ forms.input(form.numQuestions) }}
-        <!-- <p>
+        {{ forms.input(form.timeForTest) }}
 
+        <!-- <p>
         {{ form.description.label }}<br>
         {{ form.description(class='form-control', value= course.description) }}<br>
         {% for error in form.description.errors %}
@@ -39,9 +40,6 @@
       
     </div>
     <div>
-
-
-
     
       <a class="finCaja" href="{{ url_for('home') }}">
         <button class="btn btn-outline-secondary">
@@ -64,5 +62,8 @@
       Guardar Cambios
     </button>
   </a>
+
+</br>
+</br>
 </div>
 {% endblock %}
