@@ -100,7 +100,6 @@ def course_details(courseId):
         'scoreForTrueFalse':'1 punto cada una.',
         'scoreForSimpleSelection':'2 puntos cada una.',
         'timeForTest':'20min.',
-        'warning': 'ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental del lenguaje de marcado de hipertexto HTML, de lo contrario, no obtendra el certificado deseado.',
         'imgUrl': '/static/image/HTML.png'
     }
     form = CertificateForm()
@@ -109,16 +108,14 @@ def course_details(courseId):
 @app.route('/editor/<string:courseId>', methods=['GET'])
 def course_editor(courseId):
     course = {
+        '_id': courseId,
         'title': 'Principios Basicos de HTML5',
-
         'description': 'Esta certificacion es sobre la estructura basica para realizar una pagina sencilla en html. ',
         'numQuestions': 'Posee un total de 15 preguntas, 5 de seleccion simple y 10 de verdadero y falso. ',
         'scoreForTrueFalse':'Las preguntas de Verdadero o Falso vale 1punto cada una. ',
         'scoreForSimpleSelection':'Las preguntas de seleccion simple valen 2puntos cada una. ',
         'timeForTest':'Adicionalmente tiene 20min para responderlas.',
-        'warning': 'ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental del lenguaje de marcado de hipertexto HTML, de lo contrario, no obtendra el certificado deseado.',
-        'imgUrl': '/static/image/HTML.png',
-        '_id': courseId
+        'imgUrl': '/static/image/HTML.png'
     }
 
     form = CertificateForm()
