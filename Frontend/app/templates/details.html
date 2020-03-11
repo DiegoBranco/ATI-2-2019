@@ -16,43 +16,39 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col"> Caracterisiticas</th>
-            <th scope="col"> Detalles </th>
+            <th scope="col"> {{_("Caracterisiticas")}} </th>
+            <th scope="col"> {{_("Detalles")}} </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Fecha de creacion/actualizacion:</th>
+            <th scope="row"> {{_("Fecha de creacion/actualizacion:")}} </th>
             <td> {{ course.dateCreated }} </td>
           </tr>
           <tr>
-            <th scope="row">Descripcion:</th>
+            <th scope="row"> {{_("Descripcion:")}} </th>
             <td> {{ course.description }} </td>
           </tr>
           <tr>
-            <th scope="row">Numero de Preguntas:</th>
+            <th scope="row">{{_("Numero de Preguntas:")}} </th>
             <td> {{ course.numQuestions }} </td>
           </tr>
           <tr>
-            <th scope="row">Duracion de la prueba:</th>
+            <th scope="row">{{_("Duracion de la prueba:")}} </th>
             <td> {{ course.timeForTest }} </td>
           </tr>
           <tr>
-            <th scope="row">Puntaje Verdadero o Falso:</th>
+            <th scope="row">{{_("Puntaje Verdadero o Falso:")}}</th>
             <td> {{ course.scoreForTrueFalse }} </td>
           </tr>
           <tr>
-            <th scope="row">Puntaje de seleccion:</th>
+            <th scope="row">{{_("Puntaje de seleccion:")}} </th>
             <td> {{ course.scoreForSimpleSelection }} </td>
           </tr>
         </tbody>
       </table>
 
     </br>
-
-      <p class="bg-warning text-black font-weight-bold">
-        {{ course.warning}}
-      </p>  
 
       <div class="d-flex justify-content-center">
         <a class="finCaja " href="{{ url_for('test', courseId= course._id) }}">
@@ -67,6 +63,9 @@
           </button>
         </a>
       </div>
+
+    </br>
+    </br>
 
     </div>
   </div>
