@@ -417,6 +417,16 @@ def certs():
     ]
     return render_template('certs.html', title='Lista de cursos', cursos=cursos)
 
+
+@app.route('/controlpanel')
+def controlpanel():
+    certs = {
+        'cert':'Python',
+        '_id': 'Python',
+        'description':'Descripcion de curso pendiente'
+    }
+    return render_template('controlpanel.html', title='Lista de cursos')
+
 @app.errorhandler(404) 
 def not_found():
     return("not found")

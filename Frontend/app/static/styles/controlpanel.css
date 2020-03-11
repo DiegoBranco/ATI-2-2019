@@ -1,0 +1,18 @@
+.finCaja
+{
+	padding-bottom: 25px;
+}
+
+.centralCaja
+{
+	padding-top: 50px;
+}
+
+.flexcenter{
+    display: flex;
+    justify-content: center;
+}
+
+.limite{
+   margin-left: 10px;
+}

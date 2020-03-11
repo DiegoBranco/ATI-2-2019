@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/styles/controlpanel.css">
+{% endblock %}
+{%block content%}
+	<div class="position-relative overflow-hidden p-10 p-md-10 m-md-10 text-center bg-light caja">
+			<div class="col-md-10 p-lg-10 mx-auto  finCaja">
+			<h1 class="hola display-4 font-weight-normal centralCaja">{{_("Panel de Control") }}</h1>
+			</div>
+	</div>
+        <h3 class="text-center font-weight-normal">{{_("Certificaciones")}}</h3>
+        <div class="flexcenter">
+			<button class="btn btn-default limite">Eliminar</button>
+			<button class="btn btn-default limite">Modificar</button>
+			<button class="btn btn-default limite">Crear</button>
+		</div>
+		<hr>
+		<h3 class="text-center font-weight-normal">{{_("Usuarios")}}</h3>
+        <div class="flexcenter">
+			<button class="btn btn-default limite">Eliminar</button>
+			<button class="btn btn-default limite">Modificar</button>
+			<button class="btn btn-default limite">Crear</button>
+        </div>
+
+
+
+
+{%endblock%}
