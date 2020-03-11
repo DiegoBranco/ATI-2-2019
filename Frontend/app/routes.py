@@ -64,6 +64,7 @@ def index():
 @app.route('/details/<string:courseId>', methods=['GET'])
 def course_details(courseId):
     course = {
+        '_id': courseId,
         'dateCreated':'1/Mar/2020',
         'title': 'Principios Basicos de HTML5',
         'description': 'Esta certificacion es sobre la estructura basica para realizar una pagina sencilla en html.',
@@ -72,8 +73,7 @@ def course_details(courseId):
         'scoreForSimpleSelection':'2 puntos cada una.',
         'timeForTest':'20min.',
         'warning': 'ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental del lenguaje de marcado de hipertexto HTML, de lo contrario, no obtendra el certificado deseado.',
-        'imgUrl': '/static/image/HTML.png',
-        '_id': courseId
+        'imgUrl': '/static/image/HTML.png'
     }
     form = CertificateForm()
     return render_template('details.html', title='Details', course=course, form=form)
