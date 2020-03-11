@@ -8,7 +8,6 @@
     	"scoreForTrueFalse":"1 punto cada una.",
     	"scoreForSimpleSelection":"2 puntos cada una.",
     	"timeForTest":"20min.",
-    	"warning": "ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental del lenguaje, de lo contrario, no obtendra el certificado deseado.",
     	"imgUrl": "/static/image/HTML.png"
 	},
 	{
@@ -20,7 +19,6 @@
     	"scoreForTrueFalse":"1 punto cada una.",
     	"scoreForSimpleSelection":"2 puntos cada una.",
     	"timeForTest":"20min.",
-    	"warning": "ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental del lenguaje, de lo contrario, no obtendra el certificado deseado.",
     	"imgUrl": "/static/image/Javascript.png"
 	},
 	{
@@ -32,7 +30,6 @@
     	"scoreForTrueFalse":"1 punto cada una.",
     	"scoreForSimpleSelection":"2 puntos cada una.",
     	"timeForTest":"20min.",
-    	"warning": "ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental del lenguaje, de lo contrario, no obtendra el certificado deseado.",
     	"imgUrl": "/static/image/Marketing digital.png"
 	},
 	{
@@ -44,7 +41,6 @@
     	"scoreForTrueFalse":"1 punto cada una.",
     	"scoreForSimpleSelection":"2 puntos cada una.",
     	"timeForTest":"20min.",
-    	"warning": "ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental sobre el lenguaje, de lo contrario, no obtendra el certificado deseado.",
     	"imgUrl": "/static/image/ReactJS.png"
 	},
 	{
@@ -56,7 +52,6 @@
     	"scoreForTrueFalse":"1 punto cada una.",
     	"scoreForSimpleSelection":"2 puntos cada una.",
     	"timeForTest":"20min.",
-    	"warning": "ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental sobre el lenguaje, de lo contrario, no obtendra el certificado deseado.",
     	"imgUrl": "/static/image/Angular.png"
 	},
 	{
@@ -68,7 +63,6 @@
     	"scoreForTrueFalse":"1 punto cada una.",
     	"scoreForSimpleSelection":"2 puntos cada una.",
     	"timeForTest":"20min.",
-    	"warning": "ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental sobre el lenguaje, de lo contrario, no obtendra el certificado deseado.",
     	"imgUrl": "/static/image/Rails.png"
 	},
 	{
@@ -80,7 +74,6 @@
     	"scoreForTrueFalse":"1 punto cada una.",
     	"scoreForSimpleSelection":"2 puntos cada una.",
     	"timeForTest":"20min.",
-    	"warning": "ADVERTENCIA: Antes de solicitar su examen, debe tener un conocimiento fundamental sobre el lenguaje, de lo contrario, no obtendra el certificado deseado.",
     	"imgUrl": "/static/image/Python.png"
 	}
 ]
