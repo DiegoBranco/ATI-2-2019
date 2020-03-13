@@ -1,0 +1,42 @@
+[
+    {
+        "_id": "001",
+        "listTest":[
+
+            ],
+        
+        "listCert": [
+            {
+                "imgUrl": "/static/image/HTML.png",
+                "title": "HTML"
+            },
+            
+            {
+                "imgUrl": "/static/image/C++.png",
+                "title": "C++"
+            },
+            {
+                "imgUrl": "/static/image/Python.png",
+                "title": "Python"
+            },
+            {
+                "imgUrl": "/static/image/Ruby.png",
+                "title": "Ruby"
+            }
+
+        ],
+        "name": "Fulanito",
+        "lastname": "De Tal",
+        "email":"notmy@realmail.com",
+        "profileimageurl":"",
+        "birthDate":"01/01/1969",
+        "gender":"F",
+        "university":"UNEFA",
+        "location":"Valencia",
+        "facebook":"",
+        "twitter":"",
+        "passwordHash":"asdFC5SGVSOAYg",
+        "isBanned":false,
+        "adminID":""
+    }   
+]

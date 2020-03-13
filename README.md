@@ -3,7 +3,7 @@ Aplicaciones con Tecnologia de Internet UCV 2-2019
 
 ### Correr la app
 
-1. docker-composer up
+1. docker-compose up
 2. entrar en localhost:5000
 
 ### Librerias usadas hasta ahora

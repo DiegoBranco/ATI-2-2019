@@ -22,7 +22,7 @@ def ejemplo():
     ]
     return render_template('ejemplo.html', title='Home', user=user, posts=posts)
 
-@app.route('/perfil')
+@app.route('/perfil/<string:userID>')
 def perfil():
     user = { 
         'name': 'Fulano',
