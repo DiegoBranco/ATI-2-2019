@@ -127,7 +127,7 @@ def signIn():
         # mongo.db.user.insert_one({'username': form.username.data})
         flash('Login requested for user {}, remember_me={}'.format(
             form.username.data, form.remember_me.data))
-        return redirect(url_for('land'))
+        return redirect(url_for('index'))
 
     # users = mongo.db.user.find({})
 
@@ -141,7 +141,7 @@ def signUp():
         mongo.db.user.insert_one({'username': form.username.data})
         flash('Login requested for user {}, remember_me={}'.format(
             form.username.data, form.remember_me.data))
-        return redirect(url_for('land'))
+        return redirect(url_for('index'))
 
     users = mongo.db.user.find({})
 

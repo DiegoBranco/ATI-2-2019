@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="./static/styles/singUp.css">
+{% endblock %}
+
 {% block content %}
     <h1>{{ _("Sign Up") }}</h1>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
+        <div class="linea">
         <p>
             {{ form.username.label }}<br>
             {{ form.username(size=32) }}<br>
@@ -18,7 +23,66 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
+        </div>
+        <div class="linea">
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=32) }}<br>
+            {% for error in form.name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.lastName.label }}<br>
+            {{ form.lastName(size=32) }}<br>
+            {% for error in form.lastName.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        </div>
+        <div class="linea">
+        <p>
+            {{ form.mail.label }}<br>
+            {{ form.mail(size=32)}}<br>
+            {% for error in form.mail.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.birthDate.label }}<br>
+            {{ form.birthDate(size=32)}}<br>
+            {% for error in form.birthDate.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        </div>
+        <div class="linea">
+            <div class="lineaButton">
+            <p>
+                {{ form.gender.label }}
+                {{ form.gender(class_="genderButton")}}
+                {% for error in form.mail.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+        </div>
+            <p>
+                {{ form.university.label }}<br>
+                {{ form.university}}<br>
+                {% for error in form.birthDate.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.location.label }}<br>
+                {{ form.location}}<br>
+                {% for error in form.birthDate.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+        </div>
+        
+        <div class="linea"><p>{{ form.submit() }}</p></div>
     </form>
+        <p>{{_("¿Ya tienes una cuenta? ")}} <a href="{{url_for('signIn')}}">{{_("Ingresa ahora")}}</a></p>
 {% endblock %}

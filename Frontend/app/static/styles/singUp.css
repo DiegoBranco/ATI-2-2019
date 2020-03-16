@@ -1,0 +1,18 @@
+li{
+    list-style: none;
+    margin-left: 50px;
+}
+
+.linea{
+    display: flex;
+    justify-content: space-around;
+}
+
+.genderButton{
+    padding: 0px;
+    text-align: left;
+}
+.lineaButton{
+    display: flex;
+    justify-content: flex-start;
+}

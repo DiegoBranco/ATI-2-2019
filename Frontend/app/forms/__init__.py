@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, RadioField
 from wtforms.fields import TextAreaField
 from wtforms.validators import DataRequired, NumberRange
+from wtforms.fields.html5 import EmailField, DateField
 
 class SignInForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -12,9 +13,15 @@ class SignInForm(FlaskForm):
 
 class SignUpForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired()])
+    lastName = StringField('Last name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign In')
+    birthDate = DateField('Birth Date', validators=[DataRequired()])
+    mail = EmailField("Email", validators=[DataRequired()])
+    gender = RadioField('Gender', choices=[('Male','Male'),('Female','Female')])
+    university = StringField('University/Institution')
+    location = StringField('location')    
+    submit = SubmitField('Sign Up')
 
 
 
