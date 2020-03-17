@@ -1,23 +1,30 @@
 {% extends "base.html" %}
 
 {% block head %}
-<link rel="stylesheet" href="/static/styles/landing.css">
+<link rel="stylesheet" href="/static/styles/perfil.css">
 {% endblock %}
 
 {%block content%}
-    <h1 class="green" >{{ _('Hi, %(username)s!', username=user.name) }}!</h1>
+    <h1>{{ _('%(username)s', username=(user.name+" "+user.lastname)) }}</h1>
+    <p>Vive en {{ _('%(place)s', place = user.location)}}</p>
+    <p>Nacio el {{ _('%(date)s', date = user.birthDate)}}</p>
 
-    <h2>Estos son los certificados que has logrado completar:</h2>
-    {% for cert in certificate %}
-    <table>
-        <tr>
-            <td>
-                <img src = "{{ cert.imgUrl }}" height = "25" width = "25">
-            </td>
-            <td>
-                <p class="green">{{ cert.title }} </p>
-            </td>
-        </tr>
-    </table>
-    {% endfor %}
-{%endblock%}
+    {% if certificate %}
+    <h2>Estos son los certificados que ha logrado completar:</h2> 
+
+        <div id="certBox">
+            {% for cert in certificate %}
+            <div id="certIcon">
+                <p>
+                <img src = "{{ cert.imgUrl }}" height = "100" width = "100">
+                <span><h2 id="nombreCert">{{ cert.title }}</h2></span>
+                </p>
+                </div>
+            
+            {% endfor %}
+        </div>
+        {% else %}
+        <h2>¡No has hecho ningun certificado aun!</h2>
+        <h3>¿Quieres <a href="{{ url_for('certs')}}">Comenzar</a>?</h3>
+        {% endif %}
+    {% endblock %}

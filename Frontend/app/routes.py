@@ -23,32 +23,170 @@ def ejemplo():
     return render_template('ejemplo.html', title='Home', user=user, posts=posts)
 
 @app.route('/perfil/<string:userID>')
-def perfil():
-    user = { 
-        'name': 'Fulano',
-        'lastname': 'de Tal'
-    }
-    certificate = [
-            {
-                'imgUrl': '/static/image/HTML.png',
-                'title': 'HTML'
-            },
-            
-            {
-                'imgUrl': '/static/image/C++.png',
-                'title': 'C++'
-            },
-            {
-                'imgUrl': '/static/image/Python.png',
-                'title': 'Python'
-            },
-            {
-                'imgUrl': '/static/image/Ruby.png',
-                'title': 'Ruby'
-            },
-    ]
+def perfil(userID):
+    users = [
+    {
+        '_id': '0',
+        'listTest':[ ],
+        
+        'listCert': [],
+        'name': 'Fulanito',
+        'lastname': 'De Tal',
+        'email':'notmy@realmail.com',
+        'profileimageurl':'',
+        'birthDate':'01/01/1969',
+        'gender':'F',
+        'university':'UNEFA',
+        'location':'Valencia',
+        'facebook':'',
+        'twitter':'',
+        'passwordHash':'asdFC5SGVSOAYg',
+        'isBanned':'false',
+        'adminID':''
+    },
+    {
+        '_id': '1',
+        'listTest':[
 
-    return render_template('perfil.html', user=user, certificate=certificate)
+            ],
+        
+        'listCert': [],
+        'name': 'Menganito',
+        'lastname': 'De Cual',
+        'email':'notmy@realmail.com',
+        'profileimageurl':'',
+        'birthDate':'01/01/1969',
+        'gender':'F',
+        'university':'UNEFA',
+        'location':'Valencia',
+        'facebook':'',
+        'twitter':'',
+        'passwordHash':'asdFC5SGVSOAYg',
+        'isBanned':'false',
+        'adminID':''
+    },
+    {
+        '_id': '2',
+        'listTest':[ ],
+        
+        'listCert': [ ],
+        'name': 'Zutanito',
+        'lastname': 'De Alla',
+        'email':'notmy@realmail.com',
+        'profileimageurl':'',
+        'birthDate':'01/01/1969',
+        'gender':'F',
+        'university':'UNEFA',
+        'location':'Valencia',
+        'facebook':'',
+        'twitter':'',
+        'passwordHash':'asdFC5SGVSOAYg',
+        'isBanned':'false',
+        'adminID':''
+    },
+    {
+        '_id': '3',
+        'listTest':[ ],
+        
+        'listCert': [],
+        'name': 'Perengamo',
+        'lastname': 'De Bien Lejos Ya',
+        'email':'notmy@realmail.com',
+        'profileimageurl':'',
+        'birthDate':'01/01/1969',
+        'gender':'F',
+        'university':'UNEFA',
+        'location':'Valencia',
+        'facebook':'',
+        'twitter':'',
+        'passwordHash':'asdFC5SGVSOAYg',
+        'isBanned':'false',
+        'adminID':''
+    }
+    ]
+    certificate = [
+        [
+                {
+                    "imgUrl": "/static/image/HTML.png",
+                    "title": "HTML"
+                },
+                
+                {
+                    "imgUrl": "/static/image/C++.png",
+                    "title": "C++"
+                },
+                {
+                    "imgUrl": "/static/image/Python.png",
+                    "title": "Python"
+                },
+                {
+                    "imgUrl": "/static/image/Ruby.png",
+                    "title": "Ruby"
+                }
+
+        ],
+        [],    
+        
+        [
+
+                {
+                    "imgUrl": "/static/image/Python.png",
+                    "title": "Python"
+                }
+
+
+        ],
+        [
+                {
+                    "imgUrl": "/static/image/HTML.png",
+                    "title": "HTML"
+                },
+                
+                {
+                    "imgUrl": "/static/image/C++.png",
+                    "title": "C++"
+                },
+
+                {
+                    "imgUrl": "/static/image/Python.png",
+                    "title": "Python"
+                },
+
+                {
+                    "imgUrl": "/static/image/CSS.png",
+                    "title": "CSS 3"
+
+                },
+
+                {
+                    "imgUrl": "/static/image/Javascript.png",
+                    "title": "Javascript"
+
+                },
+
+                {
+                    "imgUrl": "/static/image/Java.png",
+                    "title": "Java"
+
+                },
+
+                {
+                    "imgUrl": "/static/image/Angular.png",
+                    "title": "Angular"
+
+                },
+
+                {
+                    "imgUrl": "/static/image/Ruby.png",
+                    "title": "Ruby"
+                }
+
+
+        ]
+
+    ]
+    userNumber = int(userID)
+    return render_template('perfil.html', user=users[userNumber], certificate=certificate[userNumber], userID=userNumber)
 
 @app.route('/')
 def index():
