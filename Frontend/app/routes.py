@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, mongo
-from app.forms import SignInForm, SignUpForm, CertificateForm
+from app.forms import SignInForm, SignUpForm, CertificateForm, QuestionCreateForm
 from flask_babel import _
 from datetime import datetime
 
@@ -301,9 +301,6 @@ def signUp():
 
         print("done inserting")
         return redirect(url_for('index'))
-    else:
-        print form.errors   
-    # users = mongo.db.user.find({})
 
     return render_template('sign-up.html', form=form, message= _("hi"))
 
@@ -588,6 +585,50 @@ def controlpanel():
 @app.errorhandler(404) 
 def not_found():
     return("not found")
+
+
+
+@app.route('/questionCreator/<string:courseId>', methods=['GET', 'POST'])
+def questionCreator(courseId):
+    form = QuestionCreateForm()
+    if form.validate_on_submit():
+
+        print("incoming for post")
+
+        if form.typeQuestion.data == "TrueFalse":
+            mongo.db.question.insert_one({
+                "certificate": courseId,
+                "question" : form.question.data,
+                "score": form.score.data,
+                "opcionCorrect": form.opcionCorrect.data,
+                "opcion2": form.opcion2.data,
+                "routeImg": form.routeImg.data,
+                "code":form.code.data
+            })
+
+        else:
+            mongo.db.question.insert_one({
+            "certificate": courseId,
+            'question' : form.question.data,
+            "score": form.score.data,
+            "opcionCorrect": form.opcionCorrect.data,
+            "opcion2": form.opcion2.data,
+            "opcion3": form.opcion3.data,
+            "opcion4": form.opcion4.data,
+            "routeImg": form.routeImg.data,
+            "code":form.code.data
+            })
+        flash('Signup requested for user {}'.format(
+            form.question.data))
+
+        print("done inserting")
+        return redirect(url_for("editor"))
+        
+    else:
+        print(form.errors )  
+    # users = mongo.db.user.find({})
+
+    return render_template('questionCreator.html', form=form, message= _("hi"))
 
 
 

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <form method="POST">
+            <div class="col-sm-12">
+                <p>
+                    {{ form.question.label }}<br>
+                    {{ form.question(size=32) }}<br>
+                    {% for error in form.question.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.score.label }}<br>
+                    {{ form.score(size=32) }}<br>
+                    {% for error in form.score.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.typeQuestion.label }}<br>
+                    {{ form.typeQuestion(size=32) }}<br>
+                    {% for error in form.typeQuestion.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.opcionCorrect.label }}<br>
+                    {{ form.opcionCorrect(size=32) }}<br>
+                    {% for error in form.opcionCorrect.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.opcion2.label }}<br>
+                    {{ form.opcion2(size=32) }}<br>
+                    {% for error in form.opcion2.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.opcion3.label }}<br>
+                    {{ form.opcion3(size=32) }}<br>
+                    {% for error in form.opcion3.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.opcion4.label }}<br>
+                    {{ form.opcion4(size=32) }}<br>
+                    {% for error in form.opcion4.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <div class="linea">{{ form.submit() }}</div>
+            <!-- score = IntegerField("Score", validators=[DataRequired()])
+    typeQuestion = RadioField("Type", validators=[DataRequired()])
+    routeImg = StringField("Image route")
+    opcionCorrect = StringField("Answer", validators=[DataRequired()])
+    opcion2 = StringField("Second option", validators=[DataRequired()])
+    opcion3 = StringField("Third option")
+    opcion4 = StringField("Forth option")
+    submit = SubmitField("Save") -->
+            </div>
+        </form>
+    </div>
+{% endblock %}
