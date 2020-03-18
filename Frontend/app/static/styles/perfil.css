@@ -1,0 +1,20 @@
+#nombreCert
+{
+    font-size: 200%;
+        
+}
+
+#certIcon
+{
+    margin-left: 70px;
+    margin-bottom: 50px;    
+	margin-top: 30px;
+	width: 300px;
+}
+
+#certBox
+{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
