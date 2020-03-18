@@ -1,23 +1,25 @@
 from flask_mongoengine.wtf import model_form
-from wtforms import validators, SubmitField
+from wtforms import SubmitField
+
+from wtforms.validators import DataRequired
 from app import mongo
 from flask_babel import _
-from mongoengine.fields import DateTimeField, IntField, StringField, URLField
+from mongoengine.fields import DateTimeField, IntField, StringField, URLField, ListField, ReferenceField, EmailField, BooleanField
 
 class Media():
-    mtype = mongo.StringField()
-    content = mongo.StringField()
+    mtype = StringField()
+    content = StringField()
     pass
 
 class Question():
-    question = mongo.StringField()
-    qtype =  mongo.StringField()
+    question = StringField()
+    qtype =  StringField()
     pass
 
 class Certificate(mongo.Document):
     # dateCreated
-    title = mongo.StringField()
-    description = mongo.StringField()
+    title = StringField()
+    description = StringField()
     # pdf url / firm
     pass
 
@@ -27,41 +29,41 @@ class Admin(mongo.Document):
 
 class User(mongo.Document):
     __name__ = "user"
-    username = mongo.StringField(validators=[validators.DataRequired(),], verbose_name=_("Username"))
-    password = mongo.StringField(validators=[validators.DataRequired(),])
-    listTest = mongo.ListField(mongo.ReferenceField(Certificate))
+    username = StringField(validators=[DataRequired(),], verbose_name=_("Username"))
+    password = StringField(validators=[DataRequired(),])
+    listTest = ListField(ReferenceField(Certificate))
 
-    listCert = mongo.ListField(mongo.ReferenceField(Certificate))
+    listCert = ListField(ReferenceField(Certificate))
 
-    name = mongo.StringField(verbose_name='Name', validators=[validators.DataRequired()])
+    name = StringField(verbose_name='Name', validators=[DataRequired()])
 
-    lastName = mongo.StringField(verbose_name='Last name', validators=[validators.DataRequired()])
+    lastName = StringField(verbose_name='Last name', validators=[DataRequired()])
 
-    email = mongo.EmailField(verbose_name="Email", validators=[validators.DataRequired()])
+    email = EmailField(verbose_name="Email", validators=[DataRequired()])
 
-    profileImageUrl = mongo.URLField()
+    profileImageUrl = URLField()
 
-    # birthDate = mongo.DateTimeField(verbose_name='Birth Date', validators=[validators.DataRequired()], )
+    # birthDate = DateTimeField(verbose_name='Birth Date', validators=[DataRequired()], )
 
-    gender = mongo.StringField(verbose_name='Gender', choices=[('Male','Male'),('Female','Female')])
+    gender = StringField(verbose_name='Gender', choices=[('Male','Male'),('Female','Female')])
 
-    university = mongo.StringField(verbose_name='University/Institution')
+    university = StringField(verbose_name='University/Institution')
 
-    location = mongo.StringField(verbose_name='location')    
+    location = StringField(verbose_name='location')    
 
-    remember_me = mongo.BooleanField()
+    remember_me = BooleanField()
 
-    admin = mongo.ReferenceField(Admin)
+    admin = ReferenceField(Admin)
 
     # submit = SubmitField('Sign Up')
 
-    birthDate = mongo.DateTimeField()
+    birthDate = DateTimeField()
 
     pass
 
 class Test(mongo.Document):
-    idUser = mongo.ReferenceField(User)
-    idCertificate = mongo.ReferenceField(Certificate)
+    idUser = ReferenceField(User)
+    idCertificate = ReferenceField(Certificate)
     pass
 
 
