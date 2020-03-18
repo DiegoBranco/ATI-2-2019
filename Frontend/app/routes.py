@@ -5,7 +5,7 @@ from flask_babel import _
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mongoengine.wtf import model_form
-from user import (User, GetSignInForm, GetSignUpForm)
+from .user import (User, GetSignInForm, GetSignUpForm)
 # Como recibir parametros de url 
 # https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for
 
@@ -238,13 +238,13 @@ def course_details(courseId):
     course = {
         '_id': courseId,
         'dateCreated':'1/Mar/2020',
-        'title': 'Principios Basicos de HTML5',
+        'title': 'Introducción a '+ courseId ,
         'description': 'Esta certificacion es sobre la estructura basica para realizar una pagina sencilla en html.',
         'numQuestions': '15 preguntas.',
         'scoreForTrueFalse':'1 punto cada una.',
         'scoreForSimpleSelection':'2 puntos cada una.',
         'timeForTest':'20min.',
-        'imgUrl': '/static/image/HTML.png'
+        'imgUrl': '/static/image/'+ courseId + '.png'
     }
     form = CertificateForm()
     return render_template('details.html', title='Details', course=course, form=form)
