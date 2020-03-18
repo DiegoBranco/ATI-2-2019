@@ -14,54 +14,40 @@
 
 <div class="container">
   <div class="row">
-
     <form method="POST">
+      <div class="row p-4">
+        {{ forms.input(form.title) }}
+        {{ forms.input(form.description) }}
+      </div>
 
-      <div class="col-sm-12">
-        <div>
-          {{ forms.input(form.title) }}
-          {{ forms.input(form.description) }}
-        </div>
+      <div class="row p-4"> 
         {{ forms.input(form.scoreForTrueFalse) }}
         {{ forms.input(form.scoreForSimpleSelection) }}
+      </div>
+      
+      <div class="row p-4"> 
         {{ forms.input(form.numQuestions) }}
         {{ forms.input(form.timeForTest) }}
-
-        <!-- <p>
-        {{ form.description.label }}<br>
-        {{ form.description(class='form-control', value= course.description) }}<br>
-        {% for error in form.description.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-      </p> -->
-      
-
-    </form>
-      
-    </div>
-    <div>
-    
-      <a class="finCaja" href="{{ url_for('questionCreator', courseId= course._id) }}">
-        <button class="btn btn-outline-secondary">
-          Agregar pregunta
-        </button>
-      </a>
-      <div>
-        <div>
-          
-        </div>
       </div>
-    </div>
-
+    </form>      
   </div>
+</div>
 
-
-
+<div class="row d-inline p-4">
+    <a class="finCaja" href="{{ url_for('questionCreator', courseId= course._id) }}">
+      <button class="btn btn-outline-secondary">
+        Agregar pregunta
+      </button>
+    </a>
+</div>
+<div class="row d-inline p-4"> 
   <a class="finCaja" href="{{ url_for('home') }}">
     <button class="btn btn-outline-secondary">
       Guardar Cambios
     </button>
   </a>
+</div>
+</div>
 
 </br>
 </br>
