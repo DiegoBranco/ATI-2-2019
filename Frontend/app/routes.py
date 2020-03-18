@@ -6,6 +6,7 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mongoengine.wtf import model_form
 from .user import (User, GetSignInForm, GetSignUpForm)
+
 # Como recibir parametros de url 
 # https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for
 
