@@ -1,14 +1,22 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from app import app, mongo
 from app.forms import SignInForm, SignUpForm, CertificateForm, QuestionCreateForm
 from flask_babel import _
 from datetime import datetime
-
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_mongoengine.wtf import model_form
+from user import (User, GetSignInForm, GetSignUpForm)
 # Como recibir parametros de url 
 # https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for
 
+
+
 @app.route('/ejemplo')
 def ejemplo():
+
+
+
+
     user = {'username': 'Miguel'}
     posts = [
         {
@@ -225,8 +233,6 @@ def index():
     clientes=['Google', 'Platzi', 'Yahoo', 'Bing']
     return render_template('index.html', title="ATI te educamos", cursos=cursos, clientes=clientes)
 
-
-
 @app.route('/details/<string:courseId>', methods=['GET'])
 def course_details(courseId):
     course = {
@@ -251,13 +257,19 @@ def course_editor(courseId):
     form = CertificateForm()
     return render_template('editor.html', title='Editor', course=course, form=form)
 
-@app.route('/sign-in', methods=['GET', 'POST'])
-def signIn():
-    form = SignInForm()
-    if form.validate_on_submit():
+@app.route('/sign-in', methods=['GET'])
+def signInGet():
+    form = GetSignInForm(request.form)
+    if form.validate():
         # mongo.db.user.insert_one({'username': form.username.data})
         flash('Login requested for user {}, remember_me={}'.format(
             form.username.data, form.remember_me.data))
+
+        #find user, get hash
+
+        # if check_password_hash(user.hash, form.password.data): 
+
+
         return redirect(url_for('index'))
 
     # users = mongo.db.user.find({})
@@ -265,39 +277,45 @@ def signIn():
     return render_template('sign-in.html', title='Sign In', form=form, message= _("hi"))
 
 
+@app.route('/sign-in', methods=['POST'])
+def signInPost():
+
+
+
+    return render_template('sign-in.html', title='Sign In', form=form, message= _("hi"))
+
 @app.route('/sign-up', methods=['GET', 'POST'])
 def signUp():
-    form = SignUpForm()
+    form = GetSignUpForm(request.form)
+
     if form.validate_on_submit():
-
-        print("incoming for post")
-
-
-        print(form.birthDate)
-
-
-        mongo.db.user.insert_one({
-            'username': form.username.data,
+        User.objects.upsert_one(
+            {
+            'listTest': [],
+            'listCert': [],
             'name': form.name.data,
             'lastName': form.lastName.data,
-            'password': form.password.data,
+            'email': form.mail.data,
+            'username': form.username.data,
+            'password': generate_password_hash(form.password.data),
+            'profileImageUrl': 'https://www.pondokindahmall.co.id/assets//img/default.png',
             # 'birthDate': fromtimestamp(form.birthDate.data),
-            'mail': form.mail.data,
             'gender': form.gender.data,
             'university': form.university.data,
-            'location': form.location.data,
-            'submit': form.submit.data
+            'location': form.location.data
         })
+        
         flash('Signup requested for user {}'.format(
             form.username.data))
 
 
         print("done inserting")
         return redirect(url_for('index'))
+    else:
+        print(form.errors)
+    # users = mongo.db.user.find({})
 
     return render_template('sign-up.html', form=form, message= _("hi"))
-
-
 
 @app.route('/home')
 def home():
@@ -383,6 +401,30 @@ def test(courseId):
     }
 
     return render_template('test.html', title='Certificacion', user=user, test=test)
+
+
+
+
+@app.route('/create-certificate')
+def controlpanel():
+    certs = {
+        'cert':'Python',
+        '_id': 'Python',
+        'description':'Descripcion de curso pendiente'
+    }
+    return render_template('controlpanel.html', title='Lista de cursos')
+
+
+@app.errorhandler(404) 
+def not_found():
+    return("not found")
+
+
+
+# @app.route('/static/styles/<path:path>')
+# def send_js(path):
+#     return send_from_directory('js', path)
+
 
 @app.route('/certs')
 def certs():
@@ -566,14 +608,26 @@ def certs():
     return render_template('certs.html', title='Lista de cursos', cursos=cursos)
 
 
-@app.route('/controlpanel')
-def controlpanel():
-    certs = {
-        'cert':'Python',
-        '_id': 'Python',
-        'description':'Descripcion de curso pendiente'
-    }
-    return render_template('controlpanel.html', title='Lista de cursos')
+# @app.route('/controlpanel', methods=['POST'])
+# def controlpanel():
+
+#     certificateBase = {
+#         # 'dateCreated'
+#         'title': _("Title for you awesome course"),
+#         'description' : _("Description for your awesome course"),
+#         # 'pdfUrl / firm'
+#         'numQuestions': 0,
+#         'timeForTest': 120,
+#         'listQuestion':[],
+#         'listQuestionActive':[],
+#         'imgUrl': 'https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png',
+#         'scoreForTrueFalse': 10,
+#         'scoreForSimpleSelection': 0,
+#         'users': [],
+#     }
+
+    
+#     return render_template('controlpanel.html', title='Lista de cursos')
 
 @app.errorhandler(404) 
 def not_found():

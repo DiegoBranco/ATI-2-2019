@@ -43,9 +43,9 @@
         </div>
         <div class="linea">
         <p>
-            {{ form.mail.label }}<br>
-            {{ form.mail(size=32)}}<br>
-            {% for error in form.mail.errors %}
+            {{ form.email.label }}<br>
+            {{ form.email(size=32)}}<br>
+            {% for error in form.email.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
@@ -83,7 +83,10 @@
             </p>
         </div>
         
-        <div class="linea"><p>{{ form.submit() }}</p></div>
+        <div class="linea"><p>
+            
+            <input type="submit" value="Sign up">
+        </p></div>
     </form>
-        <p>{{_("¿Ya tienes una cuenta? ")}} <a href="{{url_for('signIn')}}">{{_("Ingresa ahora")}}</a></p>
+        <p>{{_("¿Ya tienes una cuenta? ")}} <a href="{{url_for('signInGet')}}">{{_("Ingresa ahora")}}</a></p>
 {% endblock %}
