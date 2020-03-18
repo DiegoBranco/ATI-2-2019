@@ -296,21 +296,23 @@ def signUp():
     form = GetSignUpForm(request.form)
 
     if form.validate_on_submit():
-        User.objects.upsert_one(
-            {
-            'listTest': [],
-            'listCert': [],
-            'name': form.name.data,
-            'lastName': form.lastName.data,
-            'email': form.mail.data,
-            'username': form.username.data,
-            'password': generate_password_hash(form.password.data),
-            'profileImageUrl': 'https://www.pondokindahmall.co.id/assets//img/default.png',
-            # 'birthDate': fromtimestamp(form.birthDate.data),
-            'gender': form.gender.data,
-            'university': form.university.data,
-            'location': form.location.data
-        })
+        user = User(
+            listTest= [],
+            listCert= [],
+            name= form.name.data,
+            lastName= form.lastName.data,
+            email= form.email.data,
+            username= form.username.data,
+            password= generate_password_hash(form.password.data),
+            profileImageUrl= 'https://www.pondokindahmall.co.id/assets//img/default.png',
+            # birthDate= fromtimestamp(form.birthDate.data),
+            gender= form.gender.data,
+            university= form.university.data,
+            location= form.location.data
+        )
+
+
+        user.save()
         
         flash('Signup requested for user {}'.format(
             form.username.data))

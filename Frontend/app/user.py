@@ -2,7 +2,7 @@ from flask_mongoengine.wtf import model_form
 from wtforms import validators, SubmitField
 from app import mongo
 from flask_babel import _
-
+from mongoengine.fields import DateTimeField, IntField, StringField, URLField
 
 class Media():
     mtype = mongo.StringField()
@@ -31,17 +31,17 @@ class User(mongo.Document):
     password = mongo.StringField(validators=[validators.DataRequired(),])
     listTest = mongo.ListField(mongo.ReferenceField(Certificate))
 
-    # listCert = mongo.ListField(mongo.ReferenceField(Certificate))
+    listCert = mongo.ListField(mongo.ReferenceField(Certificate))
 
     name = mongo.StringField(verbose_name='Name', validators=[validators.DataRequired()])
 
     lastName = mongo.StringField(verbose_name='Last name', validators=[validators.DataRequired()])
 
-    email = mongo.EmailField("Email", validators=[validators.DataRequired()])
+    email = mongo.EmailField(verbose_name="Email", validators=[validators.DataRequired()])
 
-    profileImageUrl = mongo.URLField('https=//www.pondokindahmall.co.id/assets//img/default.png')
+    profileImageUrl = mongo.URLField()
 
-    birthDate = mongo.DateField(verbose_name='Birth Date', validators=[validators.DataRequired()])
+    # birthDate = mongo.DateTimeField(verbose_name='Birth Date', validators=[validators.DataRequired()], )
 
     gender = mongo.StringField(verbose_name='Gender', choices=[('Male','Male'),('Female','Female')])
 
