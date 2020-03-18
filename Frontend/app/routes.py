@@ -14,9 +14,6 @@ from user import (User, GetSignInForm, GetSignUpForm)
 @app.route('/ejemplo')
 def ejemplo():
 
-
-
-
     user = {'username': 'Miguel'}
     posts = [
         {
@@ -257,28 +254,22 @@ def course_editor(courseId):
     form = CertificateForm()
     return render_template('editor.html', title='Editor', course=course, form=form)
 
-@app.route('/sign-in', methods=['GET'])
+@app.route('/sign-in', methods=['GET', 'POST'])
 def signInGet():
     form = GetSignInForm(request.form)
-    if form.validate():
-        # mongo.db.user.insert_one({'username': form.username.data})
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
 
-        #find user, get hash
+    if form.username.validate(form) and form.password.validate(form):
 
-        # if check_password_hash(user.hash, form.password.data): 
+        user = User.objects(username__exact=form.username.data)[0]
 
+        if check_password_hash(user.password, form.password.data ):
+            return redirect(url_for('index'))   
+        else:
+            flash("Couldn't log you in")
 
-        return redirect(url_for('index'))
-
-    # users = mongo.db.user.find({})
-
-    return render_template('sign-in.html', title='Sign In', form=form, message= _("hi"))
-
-
-@app.route('/sign-in', methods=['POST'])
-def signInPost():
+            
+    else:
+        print(form.errors)
 
 
 
@@ -303,17 +294,16 @@ def signUp():
             university= form.university.data,
             location= form.location.data
         )
-
-
         user.save()
         
         flash('Signup requested for user {}'.format(
             form.username.data))
-
-
         print("done inserting")
         return redirect(url_for('index'))
+
     else:
+
+
         print(form.errors)
     # users = mongo.db.user.find({})
 
