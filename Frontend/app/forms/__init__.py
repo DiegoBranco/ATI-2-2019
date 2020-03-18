@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, RadioField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, RadioField, DateTimeField
 from wtforms.fields import TextAreaField
 from wtforms.validators import DataRequired, NumberRange
 from wtforms.fields.html5 import EmailField, DateField
@@ -41,6 +41,17 @@ class QuestionTFForm(FlaskForm):
 
     submit = SubmitField('Save Changes')
 
-
+class QuestionCreateForm(FlaskForm):
+    certificate = StringField("Certificate", validators=[DataRequired()])
+    question = StringField("Question", validators=[DataRequired()])
+    score = IntegerField("Score", validators=[DataRequired()])
+    typeQuestion = RadioField("Type", choices=[("TrueFalse", "TrueFalse"), ("Simple Selection", "Simple Selection")] ,validators=[DataRequired()])
+    routeImg = StringField("Image route")
+    code = StringField("Code")
+    opcionCorrect = StringField("Answer", validators=[DataRequired()])
+    opcion2 = StringField("Second option", validators=[DataRequired()])
+    opcion3 = StringField("Third option")
+    opcion4 = StringField("Fourth option")
+    submit = SubmitField("Save")
 
 # class Question4

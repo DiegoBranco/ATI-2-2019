@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, mongo
-from app.forms import SignInForm, SignUpForm, CertificateForm
+from app.forms import SignInForm, SignUpForm, CertificateForm, QuestionCreateForm
 from flask_babel import _
-
+from datetime import datetime
 
 # Como recibir parametros de url 
 # https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for
@@ -23,32 +23,170 @@ def ejemplo():
     return render_template('ejemplo.html', title='Home', user=user, posts=posts)
 
 @app.route('/perfil/<string:userID>')
-def perfil():
-    user = { 
-        'name': 'Fulano',
-        'lastname': 'de Tal'
-    }
-    certificate = [
-            {
-                'imgUrl': '/static/image/HTML.png',
-                'title': 'HTML'
-            },
-            
-            {
-                'imgUrl': '/static/image/C++.png',
-                'title': 'C++'
-            },
-            {
-                'imgUrl': '/static/image/Python.png',
-                'title': 'Python'
-            },
-            {
-                'imgUrl': '/static/image/Ruby.png',
-                'title': 'Ruby'
-            },
-    ]
+def perfil(userID):
+    users = [
+    {
+        '_id': '0',
+        'listTest':[ ],
+        
+        'listCert': [],
+        'name': 'Fulanito',
+        'lastname': 'De Tal',
+        'email':'notmy@realmail.com',
+        'profileimageurl':'',
+        'birthDate':'01/01/1969',
+        'gender':'F',
+        'university':'UNEFA',
+        'location':'Valencia',
+        'facebook':'',
+        'twitter':'',
+        'passwordHash':'asdFC5SGVSOAYg',
+        'isBanned':'false',
+        'adminID':''
+    },
+    {
+        '_id': '1',
+        'listTest':[
 
-    return render_template('perfil.html', user=user, certificate=certificate)
+            ],
+        
+        'listCert': [],
+        'name': 'Menganito',
+        'lastname': 'De Cual',
+        'email':'notmy@realmail.com',
+        'profileimageurl':'',
+        'birthDate':'01/01/1969',
+        'gender':'F',
+        'university':'UNEFA',
+        'location':'Valencia',
+        'facebook':'',
+        'twitter':'',
+        'passwordHash':'asdFC5SGVSOAYg',
+        'isBanned':'false',
+        'adminID':''
+    },
+    {
+        '_id': '2',
+        'listTest':[ ],
+        
+        'listCert': [ ],
+        'name': 'Zutanito',
+        'lastname': 'De Alla',
+        'email':'notmy@realmail.com',
+        'profileimageurl':'',
+        'birthDate':'01/01/1969',
+        'gender':'F',
+        'university':'UNEFA',
+        'location':'Valencia',
+        'facebook':'',
+        'twitter':'',
+        'passwordHash':'asdFC5SGVSOAYg',
+        'isBanned':'false',
+        'adminID':''
+    },
+    {
+        '_id': '3',
+        'listTest':[ ],
+        
+        'listCert': [],
+        'name': 'Perengamo',
+        'lastname': 'De Bien Lejos Ya',
+        'email':'notmy@realmail.com',
+        'profileimageurl':'',
+        'birthDate':'01/01/1969',
+        'gender':'F',
+        'university':'UNEFA',
+        'location':'Valencia',
+        'facebook':'',
+        'twitter':'',
+        'passwordHash':'asdFC5SGVSOAYg',
+        'isBanned':'false',
+        'adminID':''
+    }
+    ]
+    certificate = [
+        [
+                {
+                    "imgUrl": "/static/image/HTML.png",
+                    "title": "HTML"
+                },
+                
+                {
+                    "imgUrl": "/static/image/C++.png",
+                    "title": "C++"
+                },
+                {
+                    "imgUrl": "/static/image/Python.png",
+                    "title": "Python"
+                },
+                {
+                    "imgUrl": "/static/image/Ruby.png",
+                    "title": "Ruby"
+                }
+
+        ],
+        [],    
+        
+        [
+
+                {
+                    "imgUrl": "/static/image/Python.png",
+                    "title": "Python"
+                }
+
+
+        ],
+        [
+                {
+                    "imgUrl": "/static/image/HTML.png",
+                    "title": "HTML"
+                },
+                
+                {
+                    "imgUrl": "/static/image/C++.png",
+                    "title": "C++"
+                },
+
+                {
+                    "imgUrl": "/static/image/Python.png",
+                    "title": "Python"
+                },
+
+                {
+                    "imgUrl": "/static/image/CSS.png",
+                    "title": "CSS 3"
+
+                },
+
+                {
+                    "imgUrl": "/static/image/Javascript.png",
+                    "title": "Javascript"
+
+                },
+
+                {
+                    "imgUrl": "/static/image/Java.png",
+                    "title": "Java"
+
+                },
+
+                {
+                    "imgUrl": "/static/image/Angular.png",
+                    "title": "Angular"
+
+                },
+
+                {
+                    "imgUrl": "/static/image/Ruby.png",
+                    "title": "Ruby"
+                }
+
+
+        ]
+
+    ]
+    userNumber = int(userID)
+    return render_template('perfil.html', user=users[userNumber], certificate=certificate[userNumber], userID=userNumber)
 
 @app.route('/')
 def index():
@@ -138,14 +276,35 @@ def signIn():
 def signUp():
     form = SignUpForm()
     if form.validate_on_submit():
-        mongo.db.user.insert_one({'username': form.username.data})
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
+
+        print("incoming for post")
+
+
+        print(form.birthDate)
+
+
+        mongo.db.user.insert_one({
+            'username': form.username.data,
+            'name': form.name.data,
+            'lastName': form.lastName.data,
+            'password': form.password.data,
+            # 'birthDate': fromtimestamp(form.birthDate.data),
+            'mail': form.mail.data,
+            'gender': form.gender.data,
+            'university': form.university.data,
+            'location': form.location.data,
+            'submit': form.submit.data
+        })
+        flash('Signup requested for user {}'.format(
+            form.username.data))
+
+
+        print("done inserting")
         return redirect(url_for('index'))
 
-    users = mongo.db.user.find({})
-
     return render_template('sign-up.html', form=form, message= _("hi"))
+
+
 
 @app.route('/home')
 def home():
@@ -216,14 +375,14 @@ def test(courseId):
         'preguntas':[{
         'tipo':'seleccion',
         'codigo':True,
-        'pregunta':'¿Cúal es el output del siguiente fragmento de código?',
+        'pregunta':'Cual es el output del siguiente fragmento de codigo?',
         'opciones':['Hello World!', 'Puts "Hello World!" ','Error','P (World!)'],
         'correcta':'Hello World!',
         'name':'pregunta1'
     },{
         'tipo':'trueFalse',
         'codigo':False,
-        'pregunta':'¿Ruby es un lenguaje fuertemente tipado?',
+        'pregunta':'Ruby es un lenguaje fuertemente tipado?',
         'opciones':['Si', 'No'],
         'correcta' : 'Si',
         'name':'pregunta2'
@@ -426,6 +585,50 @@ def controlpanel():
 @app.errorhandler(404) 
 def not_found():
     return("not found")
+
+
+
+@app.route('/questionCreator/<string:courseId>', methods=['GET', 'POST'])
+def questionCreator(courseId):
+    form = QuestionCreateForm()
+    if form.validate_on_submit():
+
+        print("incoming for post")
+
+        if form.typeQuestion.data == "TrueFalse":
+            mongo.db.question.insert_one({
+                "certificate": courseId,
+                "question" : form.question.data,
+                "score": form.score.data,
+                "opcionCorrect": form.opcionCorrect.data,
+                "opcion2": form.opcion2.data,
+                "routeImg": form.routeImg.data,
+                "code":form.code.data
+            })
+
+        else:
+            mongo.db.question.insert_one({
+            "certificate": courseId,
+            'question' : form.question.data,
+            "score": form.score.data,
+            "opcionCorrect": form.opcionCorrect.data,
+            "opcion2": form.opcion2.data,
+            "opcion3": form.opcion3.data,
+            "opcion4": form.opcion4.data,
+            "routeImg": form.routeImg.data,
+            "code":form.code.data
+            })
+        flash('Signup requested for user {}'.format(
+            form.question.data))
+
+        print("done inserting")
+        return redirect(url_for("editor"))
+        
+    else:
+        print(form.errors )  
+    # users = mongo.db.user.find({})
+
+    return render_template('questionCreator.html', form=form, message= _("hi"))
 
 
 
