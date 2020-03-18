@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for
 from app import app, mongo
 from app.forms import SignInForm, SignUpForm, CertificateForm
 from flask_babel import _
-
+from datetime import datetime
 
 # Como recibir parametros de url 
 # https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for
@@ -138,14 +138,38 @@ def signIn():
 def signUp():
     form = SignUpForm()
     if form.validate_on_submit():
-        mongo.db.user.insert_one({'username': form.username.data})
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
-        return redirect(url_for('index'))
 
-    users = mongo.db.user.find({})
+        print("incoming for post")
+
+
+        print(form.birthDate)
+
+
+        mongo.db.user.insert_one({
+            'username': form.username.data,
+            'name': form.name.data,
+            'lastName': form.lastName.data,
+            'password': form.password.data,
+            # 'birthDate': fromtimestamp(form.birthDate.data),
+            'mail': form.mail.data,
+            'gender': form.gender.data,
+            'university': form.university.data,
+            'location': form.location.data,
+            'submit': form.submit.data
+        })
+        flash('Signup requested for user {}'.format(
+            form.username.data))
+
+
+        print("done inserting")
+        return redirect(url_for('index'))
+    else:
+        print form.errors   
+    # users = mongo.db.user.find({})
 
     return render_template('sign-up.html', form=form, message= _("hi"))
+
+
 
 @app.route('/home')
 def home():
@@ -216,14 +240,14 @@ def test(courseId):
         'preguntas':[{
         'tipo':'seleccion',
         'codigo':True,
-        'pregunta':'¿Cúal es el output del siguiente fragmento de código?',
+        'pregunta':'Cual es el output del siguiente fragmento de codigo?',
         'opciones':['Hello World!', 'Puts "Hello World!" ','Error','P (World!)'],
         'correcta':'Hello World!',
         'name':'pregunta1'
     },{
         'tipo':'trueFalse',
         'codigo':False,
-        'pregunta':'¿Ruby es un lenguaje fuertemente tipado?',
+        'pregunta':'Ruby es un lenguaje fuertemente tipado?',
         'opciones':['Si', 'No'],
         'correcta' : 'Si',
         'name':'pregunta2'
