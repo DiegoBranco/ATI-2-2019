@@ -82,6 +82,7 @@ class User(mongo.Document):
     location = StringField(verbose_name='location')    
 
     remember_me = BooleanField()
+    blocked = BooleanField(default = False)
 
     admin = ReferenceField(Admin)
 

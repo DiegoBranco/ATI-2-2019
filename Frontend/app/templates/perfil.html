@@ -5,6 +5,11 @@
 {% endblock %}
 
 {%block content%}
+
+    <form action="{{url_for('toggleBlock', userId= user.id)}}" method="GET">
+        <input type="submit" value="{{ 'unblock' if user.blocked else 'block' }}">
+    </form>
+
     <h1>{{ _('%(username)s', username=(user.name+" "+user.lastName)) }}</h1>
     <p>Vive en {{ _('%(place)s', place = user.location)}}</p>
     <p>Nacio el {{ _('%(date)s', date = user.birthDate)}}</p>

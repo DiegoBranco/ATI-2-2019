@@ -10,7 +10,9 @@ from functools import wraps
 
 from .user import (
     User, GetSignInForm, GetSignUpForm, 
-    Certificate, Question, GetCertificateForm
+    Certificate, GetCertificateForm,
+    Test,
+    Question
 )
 import datetime
 
@@ -66,11 +68,13 @@ def course_editor(courseId):
 def toggleBlock(userId):
     user = User.objects.get_or_404(id=userId)
 
-    if "blocked" in user:
-        user.blocked = None
+    if user['blocked']:
+        user.blocked = False
     else:
         user.blocked = True
-    return url_for('profile', userID = userId)
+
+    user.save()
+    return redirect(url_for('perfil', userID = userId))
 
 
 @app.route('/sign-out')
@@ -185,11 +189,9 @@ def home():
 
 @app.route('/create-test/<string:courseId>')
 @login_required
-def createTest(courseId):
+def create_test(courseId):
 
     cert = Certificate.objects.get_or_404(id=courseId)
-
-
     test = Test()
     test.userId = session['userId']
     test.certificateId = session['courseId']
@@ -246,7 +248,7 @@ def create_certificate():
 def not_found(error):
     return render_template('404.html')
 
-@app.route('/certs')
+@app.route('/certificates')
 def certs():
     cursos = Certificate.objects[:5]
 
