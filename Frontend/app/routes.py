@@ -1,7 +1,7 @@
 
 from flask import render_template, flash, redirect, url_for, request, jsonify, session
 from app import app, mongo
-from app.forms import SignInForm, SignUpForm, CertificateForm, QuestionCreateForm
+from app.forms import CertificateForm, QuestionCreateForm
 from flask_babel import _
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -11,27 +11,6 @@ from .user import (
     Certificate
 )
 import datetime
-
-# Como recibir parametros de url 
-# https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for
-
-
-
-@app.route('/ejemplo')
-def ejemplo():
-
-    user = {'username': 'Miguel'}
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('ejemplo.html', title='Home', user=user, posts=posts)
 
 @app.route('/perfil/<string:userID>')
 def perfil(userID):
@@ -82,17 +61,13 @@ def index():
 
 @app.route('/details/<string:courseId>', methods=['GET'])
 def course_details(courseId):
-    course = {
-        '_id': courseId,
-        'dateCreated':'1/Mar/2020',
-        'title': 'Introduccion a '+ courseId ,
-        'description': 'Esta certificacion es sobre la estructura basica del curso.',
-        'numQuestions': '15 preguntas.',
-        'scoreForTrueFalse':'1 punto cada una.',
-        'scoreForSimpleSelection':'2 puntos cada una.',
-        'timeForTest':'20min.',
-        'imgUrl': '/static/image/'+ courseId + '.png'
-    }
+    course = Certificate.objects.get_or_404(id= courseId)
+    # course = {
+    #     'numQuestions': '15 preguntas.',
+    #     'timeForTest':'20min.',
+    #     'imgUrl': '/static/image/'+ courseId + '.png'
+    # }
+
     form = CertificateForm()
     return render_template('details.html', title='Details', course=course, form=form)
 
@@ -100,12 +75,11 @@ def course_details(courseId):
 def course_editor(courseId):
     form = CertificateForm(request.form)
 
-    course = Certificate.objects(id__exact=courseId)[0]
+    course = Certificate.objects.get_or_404(id=courseId)
 
     if form.validate_on_submit():
 
         cert= Certificate(
-            dateCreated = DateTimeField(default= datetime.datetime.utcnow),
             title = form.title.data,
             description = form.description.data,
             numQuestions = form.numQuestions.data,
@@ -231,20 +205,20 @@ def test(courseId):
         'title':'Ruby',
         'time':'20:00',
         'preguntas':[{
-        'tipo':'seleccion',
-        'codigo':True,
-        'pregunta':'Cual es el output del siguiente fragmento de codigo?',
-        'opciones':['Hello World!', 'Puts "Hello World!" ','Error','P (World!)'],
-        'correcta':'Hello World!',
-        'name':'pregunta1'
-    },{
+            'tipo':'seleccion',
+            'codigo':True,
+            'pregunta':'Cual es el output del siguiente fragmento de codigo?',
+            'opciones':['Hello World!', 'Puts "Hello World!" ','Error','P (World!)'],
+            'correcta':'Hello World!',
+            'name':'pregunta1'
+        },{
         'tipo':'trueFalse',
         'codigo':False,
         'pregunta':'Ruby es un lenguaje fuertemente tipado?',
         'opciones':['Si', 'No'],
         'correcta' : 'Si',
         'name':'pregunta2'
-    }]
+        }]
     }
 
     return render_template('test.html', title='Certificacion', user=user, test=test)

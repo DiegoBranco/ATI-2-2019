@@ -1,32 +1,46 @@
 from flask_mongoengine.wtf import model_form
 from wtforms import SubmitField
 
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, NumberRange
 from app import mongo
 from flask_babel import _
 from mongoengine.fields import DateTimeField, IntField, StringField, URLField, ListField, ReferenceField, EmailField, BooleanField
-
-class Media():
+import datetime
+class Media(mongo.Document):
+    __name__ = "media"
     mtype = StringField()
     content = StringField()
     pass
 
-class Question():
+class Question(mongo.Document):
+    __name__ = "question"
     question = StringField()
     qtype =  StringField()
     pass
 
 class Certificate(mongo.Document):
-    # dateCreated
-    title = StringField()
-    description = StringField()
+    __name__ = "certificate"
     imgUrl = URLField()
+    title = StringField(verbose_name= "Title", validators=[DataRequired()])
+    description = StringField(verbose_name= "Description", validators=[DataRequired()])
+    scoreForTrueFalse = IntField(verbose_name= "Score For True False", validators=[DataRequired(), NumberRange(min=0)] )   
+    scoreForSimpleSelection = IntField(verbose_name= "Score For Simple Selection", validators=[DataRequired(), NumberRange(min=0)] )  
+    numQuestions = IntField(verbose_name= "numQuestions", validators=[DataRequired(), NumberRange(min=0)] )  
+    timeForTest = StringField(verbose_name= "timeForTest", validators=[DataRequired(), NumberRange(min=0)] )  
+    submit = SubmitField(verbose_name= 'Save Changes')
+    dateCreated = DateTimeField(default= datetime.datetime.utcnow)
+    listQuestion = ListField(ReferenceField(Question))
+    listQuestionActive = ListField(ReferenceField(Question))
 
+
+
+    # users = []
     # pdf url / firm
     pass
 
 
 class Admin(mongo.Document):
+    __name__ = "admin"
     pass
 
 class User(mongo.Document):
@@ -64,6 +78,7 @@ class User(mongo.Document):
     pass
 
 class Test(mongo.Document):
+    __name__ = "test"
     idUser = ReferenceField(User)
     idCertificate = ReferenceField(Certificate)
     pass
@@ -72,10 +87,13 @@ class Test(mongo.Document):
 UserFormSignUp = model_form(User, field_args={'password':{'password': True}, "gender":{"radio" : True}})
 UserFormSignIn = model_form(User, field_args={'password':{'password': True}})
 
+CertificateForm = model_form(Certificate)
+
 def GetSignUpForm(form):
     return UserFormSignUp(form)
-    pass
 
 def GetSignInForm(form):
     return UserFormSignIn(form)
-    pass
+
+def GetCertificateForm(form):
+    return CertificateForm(form)
