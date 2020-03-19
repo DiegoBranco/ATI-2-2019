@@ -26,7 +26,6 @@ class QuestionCreateForm(FlaskForm):
     
     certificate = StringField("Certificate", validators=[DataRequired()])
     question = StringField("Question", validators=[DataRequired()])
-    score = IntegerField("Score", validators=[DataRequired()])
     typeQuestion = RadioField("Type", choices=[("TrueFalse", "TrueFalse"), ("Simple Selection", "Simple Selection")] ,validators=[DataRequired()])
     routeImg = StringField("Image route")
     code = StringField("Code")

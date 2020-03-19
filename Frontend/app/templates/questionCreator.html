@@ -15,13 +15,6 @@
                     {% endfor %}
                 </p>
                 <p>
-                    {{ form.score.label }}<br>
-                    {{ form.score(size=32) }}<br>
-                    {% for error in form.score.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
                     {{ form.typeQuestion.label }}<br>
                     {{ form.typeQuestion(size=32) }}<br>
                     {% for error in form.typeQuestion.errors %}
@@ -57,6 +50,11 @@
                     {% endfor %}
                 </p>
                 <div class="linea">{{ form.submit() }}</div>
+                <a class="finCaja" href="{{ url_for('home') }}">
+                    <button class="btn btn-outline-secondary">
+                      Guardar Cambios
+                    </button>
+                  </a>   
             <!-- score = IntegerField("Score", validators=[DataRequired()])
     typeQuestion = RadioField("Type", validators=[DataRequired()])
     routeImg = StringField("Image route")

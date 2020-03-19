@@ -23,6 +23,10 @@ class Question(mongo.Document):
     __name__ = "question"
     question = StringField()
     qtype =  StringField()
+    answer = StringField()
+    opcion2 = StringField()
+    opcion3 = StringField()
+    opcion4 = StringField()
     pass
 
 class Certificate(mongo.Document):
@@ -43,6 +47,10 @@ class Certificate(mongo.Document):
     # users = []
     # pdf url / firm
     pass
+
+
+
+
 
 
 class Admin(mongo.Document):
