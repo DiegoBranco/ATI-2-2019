@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, session
 from app import app, mongo
 from app.forms import SignInForm, SignUpForm, CertificateForm, QuestionCreateForm
 from flask_babel import _
@@ -262,9 +262,10 @@ def signInGet():
     if form.username.validate(form) and form.password.validate(form):
 
         user = User.objects(username__exact=form.username.data)[0]
-
+        
         if check_password_hash(user.password, form.password.data ):
-            return redirect(url_for('index'))   
+            session['user'] = user
+            return redirect(url_for('home'))   
         else:
             flash("Couldn't log you in")
 
@@ -312,7 +313,7 @@ def signUp():
 
 @app.route('/home')
 def home():
-    user = {'username':'Miguel'}
+    user = session.get('user')
     post = {
         'cursos':{
         'ultimo':{
