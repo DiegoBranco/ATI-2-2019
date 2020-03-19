@@ -51,13 +51,13 @@
     </br>
 
       <div class="d-flex justify-content-center">
-        <a class="finCaja " href="{{ url_for('test', courseId= course._id) }}">
+        <a class="finCaja " href="{{ url_for('test', courseId= course.id) }}">
           <button class="btn btn-outline-secondary">
               Iniciar Test
           </button>
         </a>      
       
-        <a class="finCaja " href="{{ url_for('course_editor', courseId= course._id) }}">
+        <a class="finCaja " href="{{ url_for('course_editor', courseId= course.id) }}">
           <button class="btn btn-outline-secondary">
             Editar Test
           </button>

@@ -16,18 +16,18 @@
   <div class="row">
     <form method="POST" enctype="multipart/form-data">
       <div class="row p-4">
-        {{ forms.input(form.title) }}
-        {{ forms.input(form.description) }}
+        {{ forms.input(form.title, default = course.title) }}
+        {{ forms.input(form.description, default = course.description) }}
       </div>
 
       <div class="row p-4"> 
-        {{ forms.input(form.scoreForTrueFalse) }}
-        {{ forms.input(form.scoreForSimpleSelection) }}
+        {{ forms.input(form.scoreForTrueFalse, default = course.scoreForTrueFalse) }}
+        {{ forms.input(form.scoreForSimpleSelection, default = course.scoreForSimpleSelection) }}
       </div>
       
       <div class="row p-4"> 
-        {{ forms.input(form.numQuestions) }}
-        {{ forms.input(form.timeForTest) }}
+        {{ forms.input(form.numQuestions, default = course.numQuestions) }}
+        {{ forms.input(form.timeForTest, default = course.timeForTest) }}
       </div>
       <div>
         <input type="file" name="archivo" accept=".pdf,.jpg,.png">

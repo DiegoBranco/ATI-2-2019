@@ -62,14 +62,7 @@ def index():
 @app.route('/details/<string:courseId>', methods=['GET'])
 def course_details(courseId):
     course = Certificate.objects.get_or_404(id= courseId)
-    # course = {
-    #     'numQuestions': '15 preguntas.',
-    #     'timeForTest':'20min.',
-    #     'imgUrl': '/static/image/'+ courseId + '.png'
-    # }
-
-    form = CertificateForm()
-    return render_template('details.html', title='Details', course=course, form=form)
+    return render_template('details.html', title='Details', course=course)
 
 @app.route('/editor/<string:courseId>', methods=['GET'])
 def course_editor(courseId):

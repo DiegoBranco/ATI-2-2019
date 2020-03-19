@@ -1,9 +1,9 @@
 
 
-{% macro input(field, data) -%}
+{% macro input(field, data, default) -%}
   <div>
     {{ field.label }}<br>
-    {{ field(class='form-control') }}<br>
+    {{ field(class='form-control', value = default) }}<br>
     {% for error in field.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
