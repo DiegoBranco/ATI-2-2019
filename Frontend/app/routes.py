@@ -10,6 +10,7 @@ from .user import (
     User, GetSignInForm, GetSignUpForm, 
     Certificate
 )
+import datetime
 
 # Como recibir parametros de url 
 # https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for
@@ -34,169 +35,9 @@ def ejemplo():
 
 @app.route('/perfil/<string:userID>')
 def perfil(userID):
-    users = [
-    {
-        '_id': '0',
-        'listTest':[ ],
-        
-        'listCert': [],
-        'name': 'Fulanito',
-        'lastname': 'De Tal',
-        'email':'notmy@realmail.com',
-        'profileimageurl':'',
-        'birthDate':'01/01/1969',
-        'gender':'F',
-        'university':'UNEFA',
-        'location':'Valencia',
-        'facebook':'',
-        'twitter':'',
-        'passwordHash':'asdFC5SGVSOAYg',
-        'isBanned':'false',
-        'adminID':''
-    },
-    {
-        '_id': '1',
-        'listTest':[
-
-            ],
-        
-        'listCert': [],
-        'name': 'Menganito',
-        'lastname': 'De Cual',
-        'email':'notmy@realmail.com',
-        'profileimageurl':'',
-        'birthDate':'01/01/1969',
-        'gender':'F',
-        'university':'UNEFA',
-        'location':'Valencia',
-        'facebook':'',
-        'twitter':'',
-        'passwordHash':'asdFC5SGVSOAYg',
-        'isBanned':'false',
-        'adminID':''
-    },
-    {
-        '_id': '2',
-        'listTest':[ ],
-        
-        'listCert': [ ],
-        'name': 'Zutanito',
-        'lastname': 'De Alla',
-        'email':'notmy@realmail.com',
-        'profileimageurl':'',
-        'birthDate':'01/01/1969',
-        'gender':'F',
-        'university':'UNEFA',
-        'location':'Valencia',
-        'facebook':'',
-        'twitter':'',
-        'passwordHash':'asdFC5SGVSOAYg',
-        'isBanned':'false',
-        'adminID':''
-    },
-    {
-        '_id': '3',
-        'listTest':[ ],
-        
-        'listCert': [],
-        'name': 'Perengamo',
-        'lastname': 'De Bien Lejos Ya',
-        'email':'notmy@realmail.com',
-        'profileimageurl':'',
-        'birthDate':'01/01/1969',
-        'gender':'F',
-        'university':'UNEFA',
-        'location':'Valencia',
-        'facebook':'',
-        'twitter':'',
-        'passwordHash':'asdFC5SGVSOAYg',
-        'isBanned':'false',
-        'adminID':''
-    }
-    ]
-    certificate = [
-        [
-                {
-                    "imgUrl": "/static/image/HTML.png",
-                    "title": "HTML"
-                },
-                
-                {
-                    "imgUrl": "/static/image/C++.png",
-                    "title": "C++"
-                },
-                {
-                    "imgUrl": "/static/image/Python.png",
-                    "title": "Python"
-                },
-                {
-                    "imgUrl": "/static/image/Ruby.png",
-                    "title": "Ruby"
-                }
-
-        ],
-        [],    
-        
-        [
-
-                {
-                    "imgUrl": "/static/image/Python.png",
-                    "title": "Python"
-                }
-
-
-        ],
-        [
-                {
-                    "imgUrl": "/static/image/HTML.png",
-                    "title": "HTML"
-                },
-                
-                {
-                    "imgUrl": "/static/image/C++.png",
-                    "title": "C++"
-                },
-
-                {
-                    "imgUrl": "/static/image/Python.png",
-                    "title": "Python"
-                },
-
-                {
-                    "imgUrl": "/static/image/CSS.png",
-                    "title": "CSS 3"
-
-                },
-
-                {
-                    "imgUrl": "/static/image/Javascript.png",
-                    "title": "Javascript"
-
-                },
-
-                {
-                    "imgUrl": "/static/image/Java.png",
-                    "title": "Java"
-
-                },
-
-                {
-                    "imgUrl": "/static/image/Angular.png",
-                    "title": "Angular"
-
-                },
-
-                {
-                    "imgUrl": "/static/image/Ruby.png",
-                    "title": "Ruby"
-                }
-
-
-        ]
-
-    ]
-    userNumber = int(userID)
-    return render_template('perfil.html', user=users[userNumber], certificate=certificate[userNumber], userID=userNumber)
+    user = User.get_or_404(id=userID)
+    certificates=[]
+    return render_template('perfil.html', user=user, certificate=certificates)
 
 @app.route('/')
 def index():
@@ -257,10 +98,26 @@ def course_details(courseId):
 
 @app.route('/editor/<string:courseId>', methods=['GET'])
 def course_editor(courseId):
-    course = {
-        '_id': courseId,
-        'imgUrl': '/static/image/HTML.png'}
     form = CertificateForm()
+
+    course = Certificate.objects(id__exact=courseId)[0]
+
+    if form.validate_on_submit():
+
+        cert= certificate(
+            dateCreated = DateTimeField(default= datetime.datetime.utcnow),
+            title = form.title.data,
+            description = form.description.data,
+            numQuestions = form.numQuestions.data,
+            timeForTest = form.timeForTest.data,
+            listQuestion = [],
+            listQuestionActive = [],
+            scoreForTrueFalse = form.scoreForTrueFalse.data,
+            scoreForSimpleSelection = form.scoreForSimpleSelection.data,
+            users = []
+        )
+        certificate.save()
+
     return render_template('editor.html', title='Editor', course=course, form=form)
 
 @app.route('/sign-in', methods=['GET', 'POST'])
@@ -322,6 +179,7 @@ def signUp():
 @app.route('/home')
 def home():
     user = session.get('user')
+    print(user)
     post = {
         'cursos':{
         'ultimo':{
