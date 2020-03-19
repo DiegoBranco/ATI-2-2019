@@ -82,19 +82,19 @@ def index():
 
 @app.route('/details/<string:courseId>', methods=['GET'])
 def course_details(courseId):
-    Certificate.objects.get_or_404(id=courseId)
-    # course = {
-    #     '_id': courseId,
-    #     'dateCreated':'1/Mar/2020',
-    #     'title': 'Introduccion a '+ courseId ,
-    #     'description': 'Esta certificacion es sobre la estructura basica para realizar una pagina sencilla en html.',
-    #     'numQuestions': '15 preguntas.',
-    #     'scoreForTrueFalse':'1 punto cada una.',
-    #     'scoreForSimpleSelection':'2 puntos cada una.',
-    #     'timeForTest':'20min.',
-    #     'imgUrl': '/static/image/'+ courseId + '.png'
-    # }
-    return render_template('details.html', title='Details', course=Certificate)
+    course = {
+        '_id': courseId,
+        'dateCreated':'1/Mar/2020',
+        'title': 'Introduccion a '+ courseId ,
+        'description': 'Esta certificacion es sobre la estructura basica del curso.',
+        'numQuestions': '15 preguntas.',
+        'scoreForTrueFalse':'1 punto cada una.',
+        'scoreForSimpleSelection':'2 puntos cada una.',
+        'timeForTest':'20min.',
+        'imgUrl': '/static/image/'+ courseId + '.png'
+    }
+    form = CertificateForm()
+    return render_template('details.html', title='Details', course=course, form=form)
 
 @app.route('/editor/<string:courseId>', methods=['GET'])
 def course_editor(courseId):
