@@ -1,7 +1,7 @@
 
 
-{% macro curso(c) -%}
-<a href="{{ url_for('course_details', courseId=c._id) }}"><div class="contenedorCurso">
+{% macro curso(c, goto) -%}
+<a href="{{ url_for(goto, courseId=c.id) }}"><div class="contenedorCurso">
     <img height=100px class="imagenCurso" src="{{c.imgUrl}}">
     <span class="curso"><h2>{{c.title}}</h2><p>{{c.description}}</p></span>
     </div>
