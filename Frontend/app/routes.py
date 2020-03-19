@@ -98,13 +98,13 @@ def course_details(courseId):
 
 @app.route('/editor/<string:courseId>', methods=['GET'])
 def course_editor(courseId):
-    form = CertificateForm()
+    form = CertificateForm(request.form)
 
     course = Certificate.objects(id__exact=courseId)[0]
 
     if form.validate_on_submit():
 
-        cert= certificate(
+        cert= Certificate(
             dateCreated = DateTimeField(default= datetime.datetime.utcnow),
             title = form.title.data,
             description = form.description.data,
@@ -116,7 +116,7 @@ def course_editor(courseId):
             scoreForSimpleSelection = form.scoreForSimpleSelection.data,
             users = []
         )
-        certificate.save()
+        cert.save()
 
     return render_template('editor.html', title='Editor', course=course, form=form)
 
