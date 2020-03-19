@@ -1,85 +1,84 @@
 {% extends "base.html" %}
 
-{% block head %}
-<link rel="stylesheet" href="./static/styles/singUp.css">
-{% endblock %}
-
 {% block content %}
     <h1>{{ _("Sign Up") }}</h1>
     <form action="{{url_for('signUp')}}" method="post" novalidate>
         {{form.csrf_token}}
         
-        <div class="linea">
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        </div>
-        <div class="linea">
-        <p>
-            {{ form.name.label }}<br>
-            {{ form.name(size=32) }}<br>
-            {% for error in form.name.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.lastName.label }}<br>
-            {{ form.lastName(size=32) }}<br>
-            {% for error in form.lastName.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        </div>
-        <div class="linea">
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(size=32)}}<br>
-            {% for error in form.email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        </div>
-        <div class="linea">
-            <div class="lineaButton">
-            <p>
-                {{ form.gender.label }}
-                {{ form.gender(class_="genderButton")}}
-                {% for error in form.gender.errors %}
+        <div class="row">
+            <div class="col-offset-4 col-4 col-offset-4">
+                {{ form.username.label }}<br>
+                {{ form.username(size=32) }}<br>
+                {% for error in form.username.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
-            </p>
+            </div>
+        
+            <div class="col-offset-4 col-4 col-offset-4">
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}<br>
+                {% for error in form.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
         </div>
-            <p>
-                {{ form.university.label }}<br>
-                {{ form.university}}<br>
-                {% for error in form.university.errors %}
+
+        <div class="row">
+            <div class="col-offset-4 col-4 col-offset-4">
+                {{ form.name.label }}<br>
+                {{ form.name(size=32) }}<br>
+                {% for error in form.name.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
-            </p>
-            <p>
-                {{ form.location.label }}<br>
-                {{ form.location}}<br>
-                {% for error in form.location.errors %}
+            </div>
+            
+            <div class="col-offset-4 col-4 col-offset-4">
+                {{ form.lastName.label }}<br>
+                {{ form.lastName(size=32) }}<br>
+                {% for error in form.lastName.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
-            </p>
+            </div>
         </div>
         
-        <div class="linea"><p>
-            
-            <input type="submit" value="Sign up">
-        </p></div>
+        <div class="row">
+            <div class="col-offset-4 col-4 col-offset-4">
+                {{ form.email.label }}<br>
+                {{ form.email(size=32)}}<br>
+                {% for error in form.email.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+                <div class="col-offset-4 col-4 col-offset-4">
+                    {{ form.gender.label }}
+                    {{ form.gender(class_="genderButton")}}
+                    {% for error in form.gender.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+                <div class="col-offset-4 col-4 col-offset-4">
+                    {{ form.university.label }}<br>
+                    {{ form.university}}<br>
+                    {% for error in form.university.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+                <div class="col-offset-4 col-4 col-offset-4">
+                    {{ form.location.label }}<br>
+                    {{ form.location}}<br>
+                    {% for error in form.location.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+        </div>
+        
+        <div class="row">
+            <p>
+               <input type="submit" value="Sign up">
+            </p>
+        </div>
     </form>
         <p>{{_("¿Ya tienes una cuenta? ")}} <a href="{{url_for('signInGet')}}">{{_("Ingresa ahora")}}</a></p>
 {% endblock %}
