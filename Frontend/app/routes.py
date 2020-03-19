@@ -7,12 +7,11 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mongoengine.wtf import model_form
 from functools import wraps
-
 from .user import (
     User, GetSignInForm, GetSignUpForm, 
     Certificate, GetCertificateForm,
     Test,
-    Question
+    Question, GetQuestionForm
 )
 import datetime
 
@@ -48,6 +47,10 @@ def course_editor(courseId):
     form = GetCertificateForm(request.form)
 
     course = Certificate.objects.get_or_404(id=courseId)
+    print(course.listQuestion)
+    for q in course.listQuestion:
+        print(q.question)
+
 
     if form.validate_on_submit():
         course.title = form.title.data
@@ -57,7 +60,6 @@ def course_editor(courseId):
         course.scoreForTrueFalse = form.scoreForTrueFalse.data
         course.scoreForSimpleSelection = form.scoreForSimpleSelection.data
         course.save()
-        print("saved the course")
     else:
         print(form.errors)
 
@@ -198,9 +200,6 @@ def create_test(courseId):
     test.scoreForSimpleSelection = cert.scoreForSimpleSelection
     test.scoreForTrueFalse = cert.scoreForTrueFalse
     test.approvalScore = cert.approvalScore
-
-
-
     redirect(url_for('test', testId= test.id))
     pass
 
@@ -230,9 +229,6 @@ def test(courseId):
 
     return render_template('test.html', title='Certificacion', user=user, test=test)
 
-
-
-
 @app.route('/create-certificate')
 def create_certificate():
     cert = Certificate()
@@ -257,7 +253,6 @@ def not_found(error):
 @app.route('/certificates')
 def certs():
     cursos = Certificate.objects[:5]
-
     return render_template('certs.html', title='Lista de cursos', cursos=cursos)
 
 
@@ -268,47 +263,59 @@ def controlpanel():
     return render_template('controlpanel.html', title='Lista de cursos', certs=certs)
 
 
-@app.route('/create_question')
-def create_question():
+@app.route('/create_question/<string:courseId>', methods=['GET'])
+def create_question(courseId):
+    cert = Certificate.objects.get_or_404(id=courseId)
+
+    # cert = Certificate()
+
     question = Question()
     question.question = _("My awesome question")
-    question.qtype = _("My question type")
-    question.answer = _("Correct answer")
-    question.opcion2 = _("opcion2")
-    question.opcion3 = _("opcion3")
-    question.opcion4 = _("opcion4")
+    question.qtype = "ss"
+    question.answer = []
 
     question.save()
-    return redirect(url_for("questionCreator", questionId=question.id))
 
-@app.route('/questionCreator/<string:questionId>', methods=['GET', 'POST'])
-def questionCreator(questionId):
-    form = QuestionCreateForm(request.form)
+    cert.listQuestion.append(question)
+    cert.listQuestionActive.append(question)
+    cert.save()
+
+
+    print("akakaka")
+    return redirect(url_for("question_editor", questionId=question.id))
+
+@app.route('/questionEditor/<string:questionId>', methods=['GET', 'POST'])
+def question_editor(questionId):
+    form = GetQuestionForm(request.form)
+    question = Question.objects.get_or_404(id=questionId)
+
 
     if form.validate_on_submit():
 
-        if form.typeQuestion.data == "TrueFalse":
-            Question.replaceone(
-                {_id: questionId},
-                {id:questionId,
-                question: form.question.data,
-                opcionCorrect: form.opcionCorrect.data,
-                opcion2: form.opcion2.data}
-            )
-        else:
-            Question.replaceone(
-                {_id: questionId},
-                {id:questionId,
-                question: form.question.data,
-                opcionCorrect: form.opcionCorrect.data,
-                opcion2: form.opcion2.data,
-                opcion3: form.opcion3.data,
-                opcion4: form.opcion4.data}
-            )
-        return redirect(url_for("home"))
-    
-    return render_template('questionCreator.html', form=form, message= _("hi"))
+        question.question = form.question.data
 
-# @app.route('/static/styles/<path:path>')
-# def send_js(path):
-#     return send_from_directory('js', path)
+        question.save()
+
+        # if form.typeQuestion.data == "TrueFalse":
+        #     Question.replaceone(
+        #         {_id: questionId},
+        #         {id:questionId,
+        #         question: form.question.data,
+        #         opcionCorrect: form.opcionCorrect.data,
+        #         opcion2: form.opcion2.data}
+        #     )
+        # else:
+        #     Question.replaceone(
+        #         {_id: questionId},
+        #         {id:questionId,
+        #         question: form.question.data,
+        #         opcionCorrect: form.opcionCorrect.data,
+        #         opcion2: form.opcion2.data,
+        #         opcion3: form.opcion3.data,
+        #         opcion4: form.opcion4.data}
+        #     )
+
+
+        return redirect(url_for("questionCreator", questionId=questionId))
+    
+    return render_template('questionCreator.html', form=form, question = question)

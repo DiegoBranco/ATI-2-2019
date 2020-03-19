@@ -36,18 +36,30 @@
         <!-- <input type="file" name="archivo" accept=".pdf,.jpg,.png"> -->
       </div>
 
-      <div class="row d-inline p-4">
-        <a class="finCaja" href="{{ url_for('create_question') }}">
-          <button class="btn btn-outline-secondary">
-            Agregar pregunta
-          </button>
-        </a>
-      </div>
       <div class="row d-inline p-4"> 
         <input type="submit" value="Save changes"/>
       </div>
-      </div>
-    </form>      
+    </div>
+  </form>      
+  <div>
+    <div class="row d-inline p-4">
+      <a class="finCaja" href="{{ url_for('create_question', courseId = course.id) }}">
+        <button class="btn btn-outline-secondary">
+          Agregar pregunta
+        </button>
+      </a>
+    </div>
+    <div>
+      <h2>Preguntas de este Certificado</h2>
+      {% for q in course.listQuestion%}
+      <a class="finCaja" href="{{ url_for('question_editor', questionId = q.id) }}">
+        <button class="btn btn-outline-secondary">
+          {{q.question}}
+        </button>
+      </a>
+      {% endfor%}
+    </div>
+  </div>
   </div>
 </div>
 

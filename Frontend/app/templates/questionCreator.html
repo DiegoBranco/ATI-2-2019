@@ -1,57 +1,15 @@
 {% extends "base.html" %}
 
-{% block head %}
+{% import './components/forms.html' as forms %}
 
-{% endblock %}
 {% block content %}
     <div class="container">
         <form method="POST">
         {{ form.hidden_tag() }}
 
             <div class="col-sm-12">
-                <p>
-                    {{ form.question.label }}<br>
-                    {{ form.question(size=32) }}<br>
-                    {% for error in form.question.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.typeQuestion.label }}<br>
-                    {{ form.typeQuestion(size=32) }}<br>
-                    {% for error in form.typeQuestion.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.opcionCorrect.label }}<br>
-                    {{ form.opcionCorrect(size=32) }}<br>
-                    {% for error in form.opcionCorrect.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.opcion2.label }}<br>
-                    {{ form.opcion2(size=32) }}<br>
-                    {% for error in form.opcion2.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.opcion3.label }}<br>
-                    {{ form.opcion3(size=32) }}<br>
-                    {% for error in form.opcion3.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.opcion4.label }}<br>
-                    {{ form.opcion4(size=32) }}<br>
-                    {% for error in form.opcion4.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <div class="linea">{{ form.submit() }}</div>
+                {{ forms.input(form.question, default= question.question) }}
+
                 <a class="finCaja" href="{{ url_for('home') }}">
                     <button class="btn btn-outline-secondary">
                       Guardar Cambios

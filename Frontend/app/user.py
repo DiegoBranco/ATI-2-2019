@@ -4,13 +4,10 @@ from wtforms import SubmitField
 from wtforms.validators import DataRequired, NumberRange
 from app import mongo
 from flask_babel import _
-from mongoengine.fields import DateTimeField, IntField, StringField, URLField, ListField, ReferenceField, EmailField, BooleanField
+from mongoengine.fields import DateTimeField, IntField, StringField, URLField, ListField, ReferenceField, EmailField, BooleanField,EmbeddedDocumentField 
 import datetime
 
 
-class Answer(mongo.Document):
-
-    pass
 
 
 class Media(mongo.Document):
@@ -19,14 +16,17 @@ class Media(mongo.Document):
     content = StringField()
     pass
 
+class Answer(mongo.EmbeddedDocument):
+    textContent = StringField()
+    media = ReferenceField(Media)
+    pass
 class Question(mongo.Document):
     __name__ = "question"
-    question = StringField()
-    qtype =  StringField()
-    answer = StringField()
-    opcion2 = StringField()
-    opcion3 = StringField()
-    opcion4 = StringField()
+    question = StringField(max_length=50)
+    media = ReferenceField(Media)
+    qtype = StringField(verbose_name='Gender', choices=[('tf','True or False'),('ss','Simple Selection')])
+    # correctAnswer = ReferenceField(Answer)
+    answer = ListField(EmbeddedDocumentField(Answer),  default=list)
     pass
 
 class Certificate(mongo.Document):
@@ -40,8 +40,8 @@ class Certificate(mongo.Document):
     timeForTest = IntField(verbose_name= "timeForTest", validators=[DataRequired(), NumberRange(min=0)] )  
     submit = SubmitField(verbose_name= 'Save Changes')
     dateCreated = DateTimeField(default= datetime.datetime.utcnow)
-    listQuestion = ListField(ReferenceField(Question))
-    listQuestionActive = ListField(ReferenceField(Question))
+    listQuestion = ListField(ReferenceField(Question),  default=list)
+    listQuestionActive = ListField(ReferenceField(Question), default=list)
     approvalScore = IntField()
 
     def clean(self):
@@ -68,9 +68,8 @@ class User(mongo.Document):
     __name__ = "user"
     username = StringField(validators=[DataRequired(),], verbose_name=_("Username"))
     password = StringField(validators=[DataRequired(),])
-    listTest = ListField(ReferenceField(Certificate))
-
-    listCert = ListField(ReferenceField(Certificate))
+    listTest = ListField(ReferenceField(Certificate),  default=list)
+    listCert = ListField(ReferenceField(Certificate),  default=list)
 
     name = StringField(verbose_name='Name', validators=[DataRequired()])
 
@@ -103,7 +102,8 @@ class Test(mongo.Document):
     __name__ = "test"
     userId = ReferenceField(User)
     certificateId = ReferenceField(Certificate)
-    listQuestion = ListField(ReferenceField(Question))
+
+    listQuestion = ListField(ReferenceField(Question), default=list)
     timeCreated = DateTimeField(default= datetime.datetime.utcnow)
     timeUserEnds = DateTimeField()
     scoreForSimpleSelection = IntField()
@@ -111,7 +111,7 @@ class Test(mongo.Document):
     # timeForTest =
     # timeEnd = 
     approvalScore = IntField()
-    answers = ListField(ReferenceField(Question))
+    answers = ListField(ReferenceField(Question), default = list)
     pass
 
 
@@ -119,6 +119,8 @@ UserFormSignUp = model_form(User, field_args={'password':{'password': True}, "ge
 UserFormSignIn = model_form(User, field_args={'password':{'password': True}})
 
 CertificateForm = model_form(Certificate)
+
+QuestionForm = model_form(Question)
 
 def GetSignUpForm(form):
     return UserFormSignUp(form)
@@ -128,3 +130,6 @@ def GetSignInForm(form):
 
 def GetCertificateForm(form):
     return CertificateForm(form)
+
+def GetQuestionForm(form):
+    return QuestionForm(form)
