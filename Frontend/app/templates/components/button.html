@@ -1,8 +1,9 @@
 
 
-
-{{ form.username.label }}<br>
-{{ form.username(size=32, class='form-control') }}<br>
-{% for error in form.username.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
+{% macro curso(c) -%}
+<a href="{{ url_for('course_details', courseId=c._id) }}"><div class="contenedorCurso">
+    <img height=100px class="imagenCurso" src="{{c.imgUrl}}">
+    <span class="curso"><h2>{{c.title}}</h2><p>{{c.description}}</p></span>
+    </div>
+    </a>
+{%- endmacro %}

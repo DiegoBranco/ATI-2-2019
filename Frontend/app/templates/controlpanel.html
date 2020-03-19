@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import './components/button.html' as btn %}
 
 {% block head %}
 <link rel="stylesheet" href="/static/styles/controlpanel.css">
@@ -13,14 +14,26 @@
         <div class="flexcenter">
 			<button class="btn btn-default limite">Eliminar</button>
 			<button class="btn btn-default limite">Modificar</button>
-			<button class="btn btn-default limite">Crear</button>
+			<a href="{{ url_for('create_certificate')}}">
+				<button class="btn btn-default limite">
+					Crear
+				</button>
+			</a>
 		</div>
 		<hr>
 		<h3 class="text-center font-weight-normal titulo">{{_("Usuarios")}}</h3>
-        <div class="flexcenter">
-			<button class="btn btn-default limite">Eliminar</button>
-			<button class="btn btn-default limite">Modificar</button>
-			<button class="btn btn-default limite">Crear</button>
+        <div>
+			<div class="flexcenter">
+				<button class="btn btn-default limite">Eliminar</button>
+				<button class="btn btn-default limite">Modificar</button>
+				<button class="btn btn-default limite">Crear</button>
+			</div>
+			<div class="flexcenter">
+				{%for c in certs %}
+					{{btn.curso(c)}}
+				{% endfor %}
+			</div>
+
 		</div>
 		<hr>
 		<h3 class="text-center font-weight-normal titulo">{{_("Estadisticas")}}</h3>

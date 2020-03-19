@@ -1,11 +1,14 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from app import app, mongo
 from app.forms import SignInForm, SignUpForm, CertificateForm, QuestionCreateForm
 from flask_babel import _
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mongoengine.wtf import model_form
-from .user import (User, GetSignInForm, GetSignUpForm)
+from .user import (
+    User, GetSignInForm, GetSignUpForm, 
+    Certificate
+)
 
 # Como recibir parametros de url 
 # https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for
@@ -236,7 +239,7 @@ def course_details(courseId):
     course = {
         '_id': courseId,
         'dateCreated':'1/Mar/2020',
-        'title': 'Introducción a '+ courseId ,
+        'title': 'Introduccion a '+ courseId ,
         'description': 'Esta certificacion es sobre la estructura basica para realizar una pagina sencilla en html.',
         'numQuestions': '15 preguntas.',
         'scoreForTrueFalse':'1 punto cada una.',
@@ -399,13 +402,14 @@ def test(courseId):
 
 
 @app.route('/create-certificate')
-def controlpanel():
-    certs = {
-        'cert':'Python',
-        '_id': 'Python',
-        'description':'Descripcion de curso pendiente'
-    }
-    return render_template('controlpanel.html', title='Lista de cursos')
+def create_certificate():
+    cert = Certificate()
+
+    cert.title = _("My awesome certificate title")
+    cert.description = _("My awesome certificate description")
+    cert.imgUrl = "https://maltawinds.com/wp-content/uploads/2018/10/education-640x360.jpg"
+    cert.save()
+    return redirect(url_for("course_editor", courseId=cert.id))
 
 
 @app.errorhandler(404) 
@@ -601,32 +605,29 @@ def certs():
     return render_template('certs.html', title='Lista de cursos', cursos=cursos)
 
 
-# @app.route('/controlpanel', methods=['POST'])
-# def controlpanel():
+@app.route('/controlpanel', methods=['GET', 'POST'])
+def controlpanel():
 
-#     certificateBase = {
-#         # 'dateCreated'
-#         'title': _("Title for you awesome course"),
-#         'description' : _("Description for your awesome course"),
-#         # 'pdfUrl / firm'
-#         'numQuestions': 0,
-#         'timeForTest': 120,
-#         'listQuestion':[],
-#         'listQuestionActive':[],
-#         'imgUrl': 'https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png',
-#         'scoreForTrueFalse': 10,
-#         'scoreForSimpleSelection': 0,
-#         'users': [],
-#     }
+    # certificateBase = {
+    #     # 'dateCreated'
+    #     'title': _("Title for you awesome course"),
+    #     'description' : _("Description for your awesome course"),
+    #     # 'pdfUrl / firm'
+    #     'numQuestions': 0,
+    #     'timeForTest': 120,
+    #     'listQuestion':[],
+    #     'listQuestionActive':[],
+    #     'imgUrl': 'https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png',
+    #     'scoreForTrueFalse': 10,
+    #     'scoreForSimpleSelection': 0,
+    #     'users': [],
+    # }
 
+    certs = Certificate.objects
+
+    print(certs)
     
-#     return render_template('controlpanel.html', title='Lista de cursos')
-
-@app.errorhandler(404) 
-def not_found():
-    return("not found")
-
-
+    return render_template('controlpanel.html', title='Lista de cursos', certs=certs)
 
 @app.route('/questionCreator/<string:courseId>', methods=['GET', 'POST'])
 def questionCreator(courseId):
@@ -669,6 +670,7 @@ def questionCreator(courseId):
     # users = mongo.db.user.find({})
 
     return render_template('questionCreator.html', form=form, message= _("hi"))
+
 
 
 

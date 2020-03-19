@@ -20,6 +20,8 @@ class Certificate(mongo.Document):
     # dateCreated
     title = StringField()
     description = StringField()
+    imgUrl = URLField()
+
     # pdf url / firm
     pass
 
