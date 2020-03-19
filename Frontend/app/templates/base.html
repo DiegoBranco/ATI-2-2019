@@ -48,7 +48,11 @@
                   </div>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link disabled" href="#">Disabled</a>
+                  {% if user%}
+                  <a class="nav-link" href="{{ url_for('perfil', userID=user._id) }}">Perfil</a>
+                  {% else %}
+                  <a class="nav-link disabled" href="">Perfil</a>
+                  {% endif%}
                 </li>
               </ul>
               <form class="form-inline my-2 my-lg-0">

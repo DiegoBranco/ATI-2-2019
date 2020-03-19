@@ -35,169 +35,9 @@ def ejemplo():
 
 @app.route('/perfil/<string:userID>')
 def perfil(userID):
-    users = [
-    {
-        '_id': '0',
-        'listTest':[ ],
-        
-        'listCert': [],
-        'name': 'Fulanito',
-        'lastname': 'De Tal',
-        'email':'notmy@realmail.com',
-        'profileimageurl':'',
-        'birthDate':'01/01/1969',
-        'gender':'F',
-        'university':'UNEFA',
-        'location':'Valencia',
-        'facebook':'',
-        'twitter':'',
-        'passwordHash':'asdFC5SGVSOAYg',
-        'isBanned':'false',
-        'adminID':''
-    },
-    {
-        '_id': '1',
-        'listTest':[
-
-            ],
-        
-        'listCert': [],
-        'name': 'Menganito',
-        'lastname': 'De Cual',
-        'email':'notmy@realmail.com',
-        'profileimageurl':'',
-        'birthDate':'01/01/1969',
-        'gender':'F',
-        'university':'UNEFA',
-        'location':'Valencia',
-        'facebook':'',
-        'twitter':'',
-        'passwordHash':'asdFC5SGVSOAYg',
-        'isBanned':'false',
-        'adminID':''
-    },
-    {
-        '_id': '2',
-        'listTest':[ ],
-        
-        'listCert': [ ],
-        'name': 'Zutanito',
-        'lastname': 'De Alla',
-        'email':'notmy@realmail.com',
-        'profileimageurl':'',
-        'birthDate':'01/01/1969',
-        'gender':'F',
-        'university':'UNEFA',
-        'location':'Valencia',
-        'facebook':'',
-        'twitter':'',
-        'passwordHash':'asdFC5SGVSOAYg',
-        'isBanned':'false',
-        'adminID':''
-    },
-    {
-        '_id': '3',
-        'listTest':[ ],
-        
-        'listCert': [],
-        'name': 'Perengamo',
-        'lastname': 'De Bien Lejos Ya',
-        'email':'notmy@realmail.com',
-        'profileimageurl':'',
-        'birthDate':'01/01/1969',
-        'gender':'F',
-        'university':'UNEFA',
-        'location':'Valencia',
-        'facebook':'',
-        'twitter':'',
-        'passwordHash':'asdFC5SGVSOAYg',
-        'isBanned':'false',
-        'adminID':''
-    }
-    ]
-    certificate = [
-        [
-                {
-                    "imgUrl": "/static/image/HTML.png",
-                    "title": "HTML"
-                },
-                
-                {
-                    "imgUrl": "/static/image/C++.png",
-                    "title": "C++"
-                },
-                {
-                    "imgUrl": "/static/image/Python.png",
-                    "title": "Python"
-                },
-                {
-                    "imgUrl": "/static/image/Ruby.png",
-                    "title": "Ruby"
-                }
-
-        ],
-        [],    
-        
-        [
-
-                {
-                    "imgUrl": "/static/image/Python.png",
-                    "title": "Python"
-                }
-
-
-        ],
-        [
-                {
-                    "imgUrl": "/static/image/HTML.png",
-                    "title": "HTML"
-                },
-                
-                {
-                    "imgUrl": "/static/image/C++.png",
-                    "title": "C++"
-                },
-
-                {
-                    "imgUrl": "/static/image/Python.png",
-                    "title": "Python"
-                },
-
-                {
-                    "imgUrl": "/static/image/CSS.png",
-                    "title": "CSS 3"
-
-                },
-
-                {
-                    "imgUrl": "/static/image/Javascript.png",
-                    "title": "Javascript"
-
-                },
-
-                {
-                    "imgUrl": "/static/image/Java.png",
-                    "title": "Java"
-
-                },
-
-                {
-                    "imgUrl": "/static/image/Angular.png",
-                    "title": "Angular"
-
-                },
-
-                {
-                    "imgUrl": "/static/image/Ruby.png",
-                    "title": "Ruby"
-                }
-
-
-        ]
-
-    ]
-    userNumber = int(userID)
-    return render_template('perfil.html', user=users[userNumber], certificate=certificate[userNumber], userID=userNumber)
+    user = User.get_or_404(id=userID)
+    certificates=[]
+    return render_template('perfil.html', user=user, certificate=certificates)
 
 @app.route('/')
 def index():
@@ -242,19 +82,19 @@ def index():
 
 @app.route('/details/<string:courseId>', methods=['GET'])
 def course_details(courseId):
-    Certificate.objects.get_or_404(id=courseId)
-    # course = {
-    #     '_id': courseId,
-    #     'dateCreated':'1/Mar/2020',
-    #     'title': 'Introduccion a '+ courseId ,
-    #     'description': 'Esta certificacion es sobre la estructura basica para realizar una pagina sencilla en html.',
-    #     'numQuestions': '15 preguntas.',
-    #     'scoreForTrueFalse':'1 punto cada una.',
-    #     'scoreForSimpleSelection':'2 puntos cada una.',
-    #     'timeForTest':'20min.',
-    #     'imgUrl': '/static/image/'+ courseId + '.png'
-    # }
-    return render_template('details.html', title='Details', course=Certificate)
+    course = {
+        '_id': courseId,
+        'dateCreated':'1/Mar/2020',
+        'title': 'Introduccion a '+ courseId ,
+        'description': 'Esta certificacion es sobre la estructura basica del curso.',
+        'numQuestions': '15 preguntas.',
+        'scoreForTrueFalse':'1 punto cada una.',
+        'scoreForSimpleSelection':'2 puntos cada una.',
+        'timeForTest':'20min.',
+        'imgUrl': '/static/image/'+ courseId + '.png'
+    }
+    form = CertificateForm()
+    return render_template('details.html', title='Details', course=course, form=form)
 
 @app.route('/editor/<string:courseId>', methods=['GET'])
 def course_editor(courseId):
@@ -339,6 +179,7 @@ def signUp():
 @app.route('/home')
 def home():
     user = session.get('user')
+    print(user)
     post = {
         'cursos':{
         'ultimo':{
