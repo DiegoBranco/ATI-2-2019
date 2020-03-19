@@ -6,6 +6,13 @@ from app import mongo
 from flask_babel import _
 from mongoengine.fields import DateTimeField, IntField, StringField, URLField, ListField, ReferenceField, EmailField, BooleanField
 import datetime
+
+
+class Answer(mongo.Document):
+
+    pass
+
+
 class Media(mongo.Document):
     __name__ = "media"
     mtype = StringField()
@@ -25,19 +32,16 @@ class Question(mongo.Document):
 class Certificate(mongo.Document):
     __name__ = "certificate"
     imgUrl = URLField()
-    title = StringField(verbose_name= "Title", validators=[DataRequired()])
+    title = StringField(max_length = 30, verbose_name= "Title", validators=[DataRequired()])
     description = StringField(verbose_name= "Description", validators=[DataRequired()])
     scoreForTrueFalse = IntField(verbose_name= "Score For True False", validators=[DataRequired(), NumberRange(min=0)] )   
     scoreForSimpleSelection = IntField(verbose_name= "Score For Simple Selection", validators=[DataRequired(), NumberRange(min=0)] )  
     numQuestions = IntField(verbose_name= "numQuestions", validators=[DataRequired(), NumberRange(min=0)] )  
-    timeForTest = StringField(verbose_name= "timeForTest", validators=[DataRequired(), NumberRange(min=0)] )  
+    timeForTest = IntField(verbose_name= "timeForTest", validators=[DataRequired(), NumberRange(min=0)] )  
     submit = SubmitField(verbose_name= 'Save Changes')
     dateCreated = DateTimeField(default= datetime.datetime.utcnow)
     listQuestion = ListField(ReferenceField(Question))
     listQuestionActive = ListField(ReferenceField(Question))
-
-
-
     # users = []
     # pdf url / firm
     pass
