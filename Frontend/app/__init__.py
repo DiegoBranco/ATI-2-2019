@@ -8,6 +8,7 @@ from flask_mongoengine import MongoEngine
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.secret_key ='Holywi'
 # mongo = PyMongo(app, connect=False)
 Debug(app)
 babel = Babel(app)
