@@ -241,7 +241,7 @@ def course_details(courseId):
         '_id': courseId,
         'dateCreated':'1/Mar/2020',
         'title': 'Introduccion a '+ courseId ,
-        'description': 'Esta certificacion es sobre la estructura basica para realizar una pagina sencilla en html.',
+        'description': 'Esta certificacion es sobre la estructura basica del curso.',
         'numQuestions': '15 preguntas.',
         'scoreForTrueFalse':'1 punto cada una.',
         'scoreForSimpleSelection':'2 puntos cada una.',
