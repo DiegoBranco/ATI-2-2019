@@ -8,11 +8,11 @@
 {%block content%}
 	<div class="position-relative overflow-hidden p-10 p-md-10 m-md-10 text-center bg-light caja">
 			<div class="col-md-10 p-lg-10 mx-auto  finCaja">
-			<h1 class="hola display-4 font-weight-normal centralCaja">{{_('Hola %(user)s', user = session['username']) }}</h1>
+			<h1 class="hola display-4 font-weight-normal centralCaja">{{_('Hola %(user)s', user = session['userId']) }}</h1>
 			<h2>{{_("¡Nos alegra que regresaras!")}}</h2>
 			</div>
 	</div>
-		<h3 class="text-center font-weight-normal">{{_("Esta es la ultimá certificación que obtuviste")}}</h3>
+		<h3 class="text-center font-weight-normal">{{_("Esta es la ultima certificación que obtuviste")}}</h3>
 		<div class="actual">
 			<img height="100px" class="imgActual" src="/static/image/{{post.cursos.ultimo.cert}}.png">
 			<span><h2>{{post.cursos.ultimo.cert}}</h2><p>{{post.cursos.ultimo.description}}</p></span>

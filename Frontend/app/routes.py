@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mongoengine.wtf import model_form
 from .user import (
     User, GetSignInForm, GetSignUpForm, 
-    Certificate
+    Certificate, GetCertificateForm
 )
 import datetime
 
@@ -66,7 +66,7 @@ def course_details(courseId):
 
 @app.route('/editor/<string:courseId>', methods=['GET'])
 def course_editor(courseId):
-    form = CertificateForm(request.form)
+    form = GetCertificateForm(request.form)
 
     course = Certificate.objects.get_or_404(id=courseId)
 
@@ -77,11 +77,8 @@ def course_editor(courseId):
             description = form.description.data,
             numQuestions = form.numQuestions.data,
             timeForTest = form.timeForTest.data,
-            listQuestion = [],
-            listQuestionActive = [],
             scoreForTrueFalse = form.scoreForTrueFalse.data,
             scoreForSimpleSelection = form.scoreForSimpleSelection.data,
-            users = []
         )
         cert.save()
 
@@ -97,6 +94,7 @@ def signInGet():
         
         if check_password_hash(user.password, form.password.data ):
             session['user'] = user
+            session['userId'] = str(user.id)
             return redirect(url_for('home'))   
         else:
             flash("Couldn't log you in")
