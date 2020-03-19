@@ -200,38 +200,42 @@ def perfil(userID):
 
 @app.route('/')
 def index():
-    cursos=[
-    {
-        'cert':'Marketing digital',
-        '_id': 'Marketing digital',
-        'description':'Descripcion de curso pendiente',
-    },
-    {
-        'cert':'Javascript',
-        '_id': 'Javascript',
-        'description':'Descripcion de curso pendiente',
-    },
-    {
-        'cert':'ReactJS',
-        '_id': 'ReactJS',
-        'description':'Descripcion de curso pendiente',
-    },
-    {
-        'cert':'Angular',
-        '_id': 'Angular',
-        'description':'Descripcion de curso pendiente',
-    },
-    {
-        'cert':'Rails',
-        '_id': 'Rails',
-        'description':'Descripcion de curso pendiente',
-    },
-    {
-        'cert':'Python',
-        '_id': 'Python',
-        'description':'Descripcion de curso pendiente',
-    }
-    ]
+    # cursos=[
+    # {
+    #     'cert':'Marketing digital',
+    #     '_id': 'Marketing digital',
+    #     'description':'Descripcion de curso pendiente',
+    # },
+    # {
+    #     'cert':'Javascript',
+    #     '_id': 'Javascript',
+    #     'description':'Descripcion de curso pendiente',
+    # },
+    # {
+    #     'cert':'ReactJS',
+    #     '_id': 'ReactJS',
+    #     'description':'Descripcion de curso pendiente',
+    # },
+    # {
+    #     'cert':'Angular',
+    #     '_id': 'Angular',
+    #     'description':'Descripcion de curso pendiente',
+    # },
+    # {
+    #     'cert':'Rails',
+    #     '_id': 'Rails',
+    #     'description':'Descripcion de curso pendiente',
+    # },
+    # {
+    #     'cert':'Python',
+    #     '_id': 'Python',
+    #     'description':'Descripcion de curso pendiente',
+    # }
+    # ]
+
+    #.orderBy()
+    cursos = Certificate.objects[:5]
+
     clientes=['Google', 'Platzi', 'Yahoo', 'Bing']
     return render_template('index.html', title="ATI te educamos", cursos=cursos, clientes=clientes)
 
@@ -321,8 +325,9 @@ def home():
     post = {
         'cursos':{
         'ultimo':{
-        'cert':'HTML',
-        'description':'Curso introductorio de HTML5'},
+            'cert':'HTML',
+            'description':'Curso introductorio de HTML5'
+        },
         'terminados':[
             {
                 'cert':'Marketing digital',
@@ -354,25 +359,11 @@ def home():
                 'description':'Descripcion de curso pendiente',
                 '_id': 'Python',
             }
-        ],
-        'disponibles':[
-            {
-                'cert':'Ruby',
-                'description':'Descripcion de curso pendiente',
-                '_id': 'Ruby',
-            },
-            {
-                'cert':'C++',
-                'description':'Descripcion de curso pendiente',
-                '_id': 'C++',
-            },
-            {
-                'cert':'CSS',
-                'description':'Descripcion de curso pendiente',
-                '_id': 'CSS',
-            }
         ]
     }}
+
+    post['cursos']['disponibles']= Certificate.objects[:5]
+
     return render_template('home.html', title='Home', user=user, post=post)
 
 @app.route('/test/<string:courseId>', methods=['GET', 'POST'])
