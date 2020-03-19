@@ -8,7 +8,7 @@
 {%block content%}
 	<div class="position-relative overflow-hidden p-10 p-md-10 m-md-10 text-center bg-light caja">
 			<div class="col-md-10 p-lg-10 mx-auto  finCaja">
-			<h1 class="hola display-4 font-weight-normal centralCaja">{{_('Hola %(user)s', user = user.username) }}</h1>
+			<h1 class="hola display-4 font-weight-normal centralCaja">{{_('Hola %(user)s', user = session['username']) }}</h1>
 			<h2>{{_("¡Nos alegra que regresaras!")}}</h2>
 			</div>
 	</div>
