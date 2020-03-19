@@ -8,9 +8,19 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mongoengine.wtf import model_form
 from .user import (
     User, GetSignInForm, GetSignUpForm, 
-    Certificate, GetCertificateForm
+    Certificate, GetCertificateForm,
+    Test
 )
 import datetime
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session['userId'] is None:
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 @app.route('/perfil/<string:userID>')
 def perfil(userID):
@@ -18,44 +28,10 @@ def perfil(userID):
     certificates=[]
     return render_template('perfil.html', user=user, certificate=certificates)
 
+
 @app.route('/')
 def index():
-    # cursos=[
-    # {
-    #     'cert':'Marketing digital',
-    #     '_id': 'Marketing digital',
-    #     'description':'Descripcion de curso pendiente',
-    # },
-    # {
-    #     'cert':'Javascript',
-    #     '_id': 'Javascript',
-    #     'description':'Descripcion de curso pendiente',
-    # },
-    # {
-    #     'cert':'ReactJS',
-    #     '_id': 'ReactJS',
-    #     'description':'Descripcion de curso pendiente',
-    # },
-    # {
-    #     'cert':'Angular',
-    #     '_id': 'Angular',
-    #     'description':'Descripcion de curso pendiente',
-    # },
-    # {
-    #     'cert':'Rails',
-    #     '_id': 'Rails',
-    #     'description':'Descripcion de curso pendiente',
-    # },
-    # {
-    #     'cert':'Python',
-    #     '_id': 'Python',
-    #     'description':'Descripcion de curso pendiente',
-    # }
-    # ]
-
-    #.orderBy()
     cursos = Certificate.objects[:5]
-
     clientes=['Google', 'Platzi', 'Yahoo', 'Bing']
     return render_template('index.html', title="ATI te educamos", cursos=cursos, clientes=clientes)
 
@@ -83,6 +59,20 @@ def course_editor(courseId):
         cert.save()
 
     return render_template('editor.html', title='Editor', course=course, form=form)
+
+
+@app.route('/sign-out/<string:courseId>')
+def blockUser():
+
+
+
+
+
+
+@app.route('/sign-out')
+def signOut():
+    session.clear()
+    return redirect(url_for('index'))
 
 @app.route('/sign-in', methods=['GET', 'POST'])
 def signInGet():
@@ -189,7 +179,27 @@ def home():
 
     return render_template('home.html', title='Home', user=user, post=post)
 
+@app.route('/create-test/<string:courseId>')
+@login_required
+def createTest(courseId):
+
+    cert = Certificate.objects.get_or_404(id=courseId)
+
+
+    test = Test()
+    test.userId = session['userId']
+    test.certificateId = session['courseId']
+    test.scoreForSimpleSelection = cert.scoreForSimpleSelection
+    test.scoreForTrueFalse = cert.scoreForTrueFalse
+    test.approvalScore = cert.approvalScore
+
+
+
+    redirect(url_for('test', testId= test.id))
+    pass
+
 @app.route('/test/<string:courseId>', methods=['GET', 'POST'])
+@login_required
 def test(courseId):
     user = {'username':'Miguel'}
     test = {
@@ -220,11 +230,11 @@ def test(courseId):
 @app.route('/create-certificate')
 def create_certificate():
     cert = Certificate()
-
     cert.title = _("My awesome certificate title")
     cert.description = _("My awesome certificate description")
     cert.imgUrl = "https://maltawinds.com/wp-content/uploads/2018/10/education-640x360.jpg"
     cert.save()
+
     return redirect(url_for("course_editor", courseId=cert.id))
 
 
@@ -416,26 +426,8 @@ def certs():
 
 @app.route('/controlpanel', methods=['GET', 'POST'])
 def controlpanel():
-
-    # certificateBase = {
-    #     # 'dateCreated'
-    #     'title': _("Title for you awesome course"),
-    #     'description' : _("Description for your awesome course"),
-    #     # 'pdfUrl / firm'
-    #     'numQuestions': 0,
-    #     'timeForTest': 120,
-    #     'listQuestion':[],
-    #     'listQuestionActive':[],
-    #     'imgUrl': 'https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png',
-    #     'scoreForTrueFalse': 10,
-    #     'scoreForSimpleSelection': 0,
-    #     'users': [],
-    # }
-
     certs = Certificate.objects
 
-    print(certs)
-    
     return render_template('controlpanel.html', title='Lista de cursos', certs=certs)
 
 @app.route('/questionCreator/<string:courseId>', methods=['GET', 'POST'])

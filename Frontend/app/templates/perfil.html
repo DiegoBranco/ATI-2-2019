@@ -5,7 +5,7 @@
 {% endblock %}
 
 {%block content%}
-    <h1>{{ _('%(username)s', username=(user.name+" "+user.lastname)) }}</h1>
+    <h1>{{ _('%(username)s', username=(user.name+" "+user.lastName)) }}</h1>
     <p>Vive en {{ _('%(place)s', place = user.location)}}</p>
     <p>Nacio el {{ _('%(date)s', date = user.birthDate)}}</p>
 

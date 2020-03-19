@@ -38,6 +38,8 @@ class Certificate(mongo.Document):
     dateCreated = DateTimeField(default= datetime.datetime.utcnow)
     listQuestion = ListField(ReferenceField(Question))
     listQuestionActive = ListField(ReferenceField(Question))
+    approvalScore = IntField()
+
     # users = []
     # pdf url / firm
     pass
@@ -83,8 +85,17 @@ class User(mongo.Document):
 
 class Test(mongo.Document):
     __name__ = "test"
-    idUser = ReferenceField(User)
-    idCertificate = ReferenceField(Certificate)
+    userId = ReferenceField(User)
+    certificateId = ReferenceField(Certificate)
+    listQuestion = ListField(ReferenceField(Question))
+    timeCreated = DateTimeField(default= datetime.datetime.utcnow)
+    timeUserEnds = DateTimeField()
+    scoreForSimpleSelection = IntField()
+    scoreForTrueFalse = IntField()
+    # timeForTest =
+    # timeEnd = 
+    approvalScore = IntField()
+    answers = ListField(ReferenceField(Question))
     pass
 
 

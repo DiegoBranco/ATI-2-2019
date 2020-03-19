@@ -27,15 +27,15 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{url_for('certs')}}">Certificaciones</a>
                 </li>
-                {% if user%}
+                {% if session["userId"]%}
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('perfil', userID=user._id) }}">Perfil</a>
+                  <a class="nav-link" href="{{ url_for('perfil', userID=session['userId']) }}">Perfil</a>
                 </li>
                 <li class="nav-item active">
                   <a class="nav-link" href="{{ url_for('controlpanel') }}"> {{_("Control Panel")}} <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="{{ url_for('index') }}"> {{_("Log out")}} <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="{{ url_for('signOut') }}"> {{_("Log out")}} <span class="sr-only">(current)</span></a>
                 </li>
                   {% else %}
                 <li class="nav-item active">
