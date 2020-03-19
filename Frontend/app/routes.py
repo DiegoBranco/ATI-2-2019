@@ -35,7 +35,7 @@ def ejemplo():
 
 @app.route('/perfil/<string:userID>')
 def perfil(userID):
-    user = User.get_or_404(id=userID)
+    user = User.objects.get_or_404(id=userID)
     certificates=[]
     return render_template('perfil.html', user=user, certificate=certificates)
 
@@ -264,8 +264,8 @@ def create_certificate():
 
 
 @app.errorhandler(404) 
-def not_found():
-    return("not found")
+def not_found(error):
+    return render_template('404.html')
 
 @app.route('/certs')
 def certs():
