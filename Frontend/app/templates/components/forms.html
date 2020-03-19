@@ -1,11 +1,27 @@
 
 
-{% macro input(field, data, default) -%}
+{% macro input(field, data, default, type, innerText) -%}
+{% if innerText %}
   <div>
     {{ field.label }}<br>
-    {{ field(class='form-control', value = default) }}<br>
+
+    <textarea class="form-control" id="{{field.id}}" name="{{field.name}}" >{{ innerText}}</textarea>
+
     {% for error in field.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
   </div>
+
+{% else %}
+
+  <div>
+    {{ field.label }}<br>
+    {{ field(class='form-control', value = default, type=type) }}<br>
+    {% for error in field.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
   {%- endmacro %}

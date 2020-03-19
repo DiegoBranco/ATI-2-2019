@@ -43,23 +43,23 @@ def course_details(courseId):
     course = Certificate.objects.get_or_404(id= courseId)
     return render_template('details.html', title='Details', course=course)
 
-@app.route('/editor/<string:courseId>', methods=['GET'])
+@app.route('/editor/<string:courseId>', methods=['GET', 'POST'])
 def course_editor(courseId):
     form = GetCertificateForm(request.form)
 
     course = Certificate.objects.get_or_404(id=courseId)
 
     if form.validate_on_submit():
-
-        cert= Certificate(
-            title = form.title.data,
-            description = form.description.data,
-            numQuestions = form.numQuestions.data,
-            timeForTest = form.timeForTest.data,
-            scoreForTrueFalse = form.scoreForTrueFalse.data,
-            scoreForSimpleSelection = form.scoreForSimpleSelection.data,
-        )
-        cert.save()
+        course.title = form.title.data
+        course.description = form.description.data
+        course.numQuestions = form.numQuestions.data
+        course.timeForTest = form.timeForTest.data
+        course.scoreForTrueFalse = form.scoreForTrueFalse.data
+        course.scoreForSimpleSelection = form.scoreForSimpleSelection.data
+        course.save()
+        print("saved the course")
+    else:
+        print(form.errors)
 
     return render_template('editor.html', title='Editor', course=course, form=form)
 
@@ -239,6 +239,12 @@ def create_certificate():
     cert.title = _("My awesome certificate title")
     cert.description = _("My awesome certificate description")
     cert.imgUrl = "https://maltawinds.com/wp-content/uploads/2018/10/education-640x360.jpg"
+
+    cert.scoreForTrueFalse = 1
+    cert.scoreForSimpleSelection = 2
+    cert.numQuestions = 10
+    cert.timeForTest = 140
+
     cert.save()
 
     return redirect(url_for("course_editor", courseId=cert.id))

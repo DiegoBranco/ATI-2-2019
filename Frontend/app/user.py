@@ -44,6 +44,13 @@ class Certificate(mongo.Document):
     listQuestionActive = ListField(ReferenceField(Question))
     approvalScore = IntField()
 
+    def clean(self):
+        print(self.scoreForSimpleSelection)
+        # self.scoreForTrueFalse = int(self.scoreForTrueFalse.data)
+        # self.scoreForSimpleSelection = int(self.scoreForSimpleSelection.data)
+        # self.numQuestions = int(self.numQuestions.data)
+        # self.timeForTest = int(self.timeForTest.data)
+
     # users = []
     # pdf url / firm
     pass
