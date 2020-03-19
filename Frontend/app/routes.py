@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mongoengine.wtf import model_form
 from .user import (
     User, GetSignInForm, GetSignUpForm, 
-    Certificate
+    Certificate, Question
 )
 import datetime
 
@@ -440,50 +440,47 @@ def controlpanel():
     
     return render_template('controlpanel.html', title='Lista de cursos', certs=certs)
 
-@app.route('/questionCreator/<string:courseId>', methods=['GET', 'POST'])
-def questionCreator(courseId):
-    form = QuestionCreateForm()
+
+@app.route('/create_question')
+def create_question():
+    question = Question()
+    question.question = _("My awesome question")
+    question.qtype = _("My question type")
+    question.answer = _("Correct answer")
+    question.opcion2 = _("opcion2")
+    question.opcion3 = _("opcion3")
+    question.opcion4 = _("opcion4")
+
+    question.save()
+    return redirect(url_for("questionCreator", questionId=question.id))
+
+@app.route('/questionCreator/<string:questionId>', methods=['GET', 'POST'])
+def questionCreator(questionId):
+    form = QuestionCreateForm(request.form)
+
     if form.validate_on_submit():
 
-        print("incoming for post")
-
         if form.typeQuestion.data == "TrueFalse":
-            mongo.db.question.insert_one({
-                "certificate": courseId,
-                "question" : form.question.data,
-                "score": form.score.data,
-                "opcionCorrect": form.opcionCorrect.data,
-                "opcion2": form.opcion2.data,
-                "routeImg": form.routeImg.data,
-                "code":form.code.data
-            })
-
+            Question.replaceone(
+                {_id: questionId},
+                {id:questionId,
+                question: form.question.data,
+                opcionCorrect: form.opcionCorrect.data,
+                opcion2: form.opcion2.data}
+            )
         else:
-            mongo.db.question.insert_one({
-            "certificate": courseId,
-            'question' : form.question.data,
-            "score": form.score.data,
-            "opcionCorrect": form.opcionCorrect.data,
-            "opcion2": form.opcion2.data,
-            "opcion3": form.opcion3.data,
-            "opcion4": form.opcion4.data,
-            "routeImg": form.routeImg.data,
-            "code":form.code.data
-            })
-        flash('Signup requested for user {}'.format(
-            form.question.data))
-
-        print("done inserting")
-        return redirect(url_for("editor"))
-        
-    else:
-        print(form.errors )  
-    # users = mongo.db.user.find({})
-
+            Question.replaceone(
+                {_id: questionId},
+                {id:questionId,
+                question: form.question.data,
+                opcionCorrect: form.opcionCorrect.data,
+                opcion2: form.opcion2.data,
+                opcion3: form.opcion3.data,
+                opcion4: form.opcion4.data}
+            )
+        return redirect(url_for("home"))
+    
     return render_template('questionCreator.html', form=form, message= _("hi"))
-
-
-
 
 # @app.route('/static/styles/<path:path>')
 # def send_js(path):
