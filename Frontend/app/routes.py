@@ -11,7 +11,8 @@ from .user import (
     User, GetSignInForm, GetSignUpForm, 
     Certificate, GetCertificateForm,
     Test,
-    Question, GetQuestionForm
+    Question, GetQuestionForm,
+    Answer
 )
 import datetime
 
@@ -272,7 +273,7 @@ def create_question(courseId):
     question = Question()
     question.question = _("My awesome question")
     question.qtype = "ss"
-    question.answer = []
+    question.answer = [Answer() for x in range(4)]
 
     question.save()
 
@@ -281,14 +282,14 @@ def create_question(courseId):
     cert.save()
 
 
-    print("akakaka")
     return redirect(url_for("question_editor", questionId=question.id))
 
 @app.route('/questionEditor/<string:questionId>', methods=['GET', 'POST'])
 def question_editor(questionId):
     form = GetQuestionForm(request.form)
     question = Question.objects.get_or_404(id=questionId)
-
+    answer = question.answer
+    print(answer)
 
     if form.validate_on_submit():
 
@@ -316,6 +317,8 @@ def question_editor(questionId):
         #     )
 
 
-        return redirect(url_for("questionCreator", questionId=questionId))
-    
-    return render_template('questionCreator.html', form=form, question = question)
+        return redirect(url_for("question_editor", questionId=questionId))
+    if question.qtype == 'tf':
+        return render_template('questionEditorTF.html', form=form, question = question, answer= answer)
+    else:
+        return render_template('questionEditorTF.html', form=form, question = question, answer= answer)

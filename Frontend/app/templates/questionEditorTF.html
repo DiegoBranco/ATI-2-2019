@@ -9,12 +9,30 @@
 
             <div class="col-sm-12">
                 {{ forms.input(form.question, default= question.question) }}
+                {{ forms.input(form.answer) }}
+
+                {% for l in answer %}
+
+                <div>
+                    {{ l.textContent }}
+                </div>
+                {% endfor %}
+
+
+                {% for l in form.answer %}
+                {{ l() }}
+                {% endfor %}
+
 
                 <a class="finCaja" href="{{ url_for('home') }}">
                     <button class="btn btn-outline-secondary">
                       Guardar Cambios
                     </button>
                   </a>   
+
+                  <!-- {% for a in answer %}
+                  
+                  {% endfor %} -->
             <!-- score = IntegerField("Score", validators=[DataRequired()])
     typeQuestion = RadioField("Type", validators=[DataRequired()])
     routeImg = StringField("Image route")

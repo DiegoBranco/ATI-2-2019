@@ -17,8 +17,9 @@ class Media(mongo.Document):
     pass
 
 class Answer(mongo.EmbeddedDocument):
-    textContent = StringField()
+    textContent = StringField(default = "Here goes your answer text")
     media = ReferenceField(Media)
+    correct = BooleanField(default = False)
     pass
 class Question(mongo.Document):
     __name__ = "question"
@@ -133,3 +134,6 @@ def GetCertificateForm(form):
 
 def GetQuestionForm(form):
     return QuestionForm(form)
+
+# def GetQuestionForm(form):
+#     return QuestionForm(form)
